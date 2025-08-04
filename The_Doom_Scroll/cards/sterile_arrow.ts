@@ -14,35 +14,36 @@ const {
   FloatingText
 } = globalThis.SpellmasonsAPI
 const {clone} = Vec;
-const {CardCategory, CardRarity, probabilityMap} = commonTypes;
+const floatingText = FloatingText.default;
 const { getCurrentTargets } = cards;
 const { containerProjectiles } = PixiUtils;
 const { makeForceMoveProjectile } = moveWithCollision;
+const {CardCategory, CardRarity, probabilityMap} = commonTypes;
 const { summoningSicknessId } = modifierSummonerSickness;
-const floatingText = FloatingText.default;
+
 import type { Vec2 } from '../../types/jmath/Vec';
 import type { HasSpace } from '../../types/entity/Type';
-import type Image from '../../types/graphics/Image'
-import type { Spell } from '../../types/cards';
 import type { Modifier } from '../../types/cards/util';
+import type { Spell } from '../../types/cards';
+import type Image from '../../types/graphics/Image'
 import type Underworld from '../../types/Underworld';
-
-export const bloodArrowCardId = 'Bloodied Arrow';
-const damage = 10;
+import { IImageAnimated } from '../../types/graphics/Image';
+import { bloodArrowCardId } from './bloodied_arrow';
+const damage = 20;
+const corpseDecayId = 'Corpse Decay';
 interface CurseData {
   modId: string,
   modifier: Modifier
 }
-const corpseDecayId = 'Corpse Decay';
 const spell: Spell = {
   card: {
-    id: bloodArrowCardId,
+    id: 'Sterile Arrow',
     category: CardCategory.Curses,
     probability: probabilityMap[CardRarity.UNCOMMON],
     manaCost: 0,
-    healthCost: 10,
+    healthCost: 15,
     expenseScaling: 1,
-    supportQuantity: false,
+    supportQuantity: true,
     ignoreRange: true,
     // so that you can fire the arrow at targets out of range
     allowNonUnitTarget: true,
@@ -51,15 +52,17 @@ const spell: Spell = {
     noInitialTarget: true,
     requiresFollowingCard: false,
     animationPath: '',
+    replaces: [bloodArrowCardId],
     sfx: '',
-    thumbnail: 'spellmasons-mods/The_Doom_Scroll/graphics/spellIconBloodArrow.png',
-    description: 'Conjures a corrupted arrow that deals 10 damage and transfers one stack of each curse per stack from the caster to enemies. Cannot apply more stacks of a curse than the caster has.',
+    thumbnail: 'spellmasons-mods/The_Doom_Scroll/graphics/spellIconBloodThorn.png',
+    description: 'Conjures a mystical arrow that deals 20 damage and transfers curses from the caster to enemies.',
     effect: async (state, card, quantity, underworld, prediction) => {
       const initialCastLocation = state.castLocation;
       // - - - - - Start copied from arrow.ts - - - - -
       let targets: Vec2[] = getCurrentTargets(state);
       targets = targets.length ? targets : [state.castLocation];
       let timeoutToNextArrow = 200;
+      for (let i = 0; i < quantity; i++) {
       for (let target of targets) {
         let casterPositionAtTimeOfCast = state.casterPositionAtTimeOfCast;
 
@@ -80,7 +83,7 @@ const spell: Spell = {
           image,
           immovable: false,
           beingPushed: false,
-          debugName: 'blood arrow'
+          debugName: 'bloodthorn arrow'
         }
         makeForceMoveProjectile({
           sourceUnit: state.casterUnit,
@@ -90,7 +93,7 @@ const spell: Spell = {
           piercesRemaining: state.aggregator.additionalPierce,
           bouncesRemaining: state.aggregator.additionalBounce,
           collidingUnitIds: [state.casterUnit.id],
-          collideFnKey: bloodArrowCardId,
+          collideFnKey: 'Bloodthorn Arrow',
           state,
         }, underworld, prediction);
 
@@ -100,6 +103,7 @@ const spell: Spell = {
           // Decrease timeout with each subsequent arrow fired to ensure that players don't have to wait too long
           timeoutToNextArrow -= 5;
         }
+      }
     }
 
       await underworld.awaitForceMoves();
@@ -149,29 +153,20 @@ const spell: Spell = {
                 .filter(x => !modifiersToExclude.includes(x.modId));
             for (let curse of curses) {
                   let animationPromise = Promise.resolve();
-                  let curseAmount = curse.modifier.quantity;
-                  let unitCurseAmount = unit.modifiers[curse.modId]?.quantity || 0;
-                  if (unitCurseAmount > curseAmount) {
-                    continue;
-                  } else if (unitCurseAmount < curseAmount) {
-                    // If the unit has less than the curse amount, we can apply it
-                    let quantityToAdd = 1;
-                    animationPromise.then(() => {
+                  // Spread the curse after the animation promise completes
+                  animationPromise.then(() => {
                     if (!prediction) {
                       floatingText({ coords: unit, text: curse.modId });
                     }
                     if (unit.alive) {
-                      //Transfers one stack of the curse from the caster to
-                      Unit.addModifier(unit, curse.modId, underworld, prediction, quantityToAdd, curse.modifier);
-                      if (projectile.sourceUnit)
-                      {Unit.removeModifier(projectile.sourceUnit, curse.modId, underworld);
-                      Unit.addModifier(projectile.sourceUnit, curse.modId, underworld, prediction, curseAmount-1, curse.modifier);
-                      }
+                        const quantityToAdd = curse.modifier.quantity;
+                        Unit.addModifier(unit, curse.modId, underworld, prediction, quantityToAdd, curse.modifier);
+                        if (projectile.sourceUnit) {
+                          Unit.removeModifier(projectile.sourceUnit, curse.modId, underworld); 
+                        }
+                                
                     }
                   });
-                  }
-                  // Spread the curse after the animation promise completes
-                  
               }
         } else {
           // There is no support for adding multiple vector locations as targets

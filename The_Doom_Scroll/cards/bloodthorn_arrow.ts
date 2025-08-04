@@ -29,7 +29,7 @@ import type Image from '../../types/graphics/Image'
 import type Underworld from '../../types/Underworld';
 import { IImageAnimated } from '../../types/graphics/Image';
 import { bloodArrowCardId } from './bloodied_arrow';
-const damage = 10;
+const damage = 20;
 const corpseDecayId = 'Corpse Decay';
 interface CurseData {
   modId: string,
@@ -52,7 +52,7 @@ const spell: Spell = {
     noInitialTarget: true,
     requiresFollowingCard: false,
     animationPath: '',
-    requires: [bloodArrowCardId],
+    replaces: [bloodArrowCardId],
     sfx: '',
     thumbnail: 'spellmasons-mods/The_Doom_Scroll/graphics/spellIconBloodThorn.png',
     description: 'Conjures a corrupted arrow that deals 20 damage and spreads curses from the caster to enemies.',
@@ -159,8 +159,7 @@ const spell: Spell = {
                       floatingText({ coords: unit, text: curse.modId });
                     }
                     if (unit.alive) {
-                      const existingQuantity = unit.modifiers[curse.modId]?.quantity as number;
-                        const quantityToAdd = curse.modifier.quantity - existingQuantity;
+                        const quantityToAdd = curse.modifier.quantity * 2;
                         Unit.addModifier(unit, curse.modId, underworld, prediction, quantityToAdd, curse.modifier);         
                     }
                   });
