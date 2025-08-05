@@ -11,6 +11,7 @@ import target_stomp from './cards/target_stomp';
 import wind_explosion from './cards/wind_explosion';
 import wind_tunnel from './cards/wind_tunnel';
 import pillar from "./entity/pillar";
+import pylon from "./entity/altar";
 console.log('jtest', pillar)
 ///<reference path="..globalTypes.d.ts"/>
 const mod: Mod = {
@@ -32,7 +33,8 @@ const mod: Mod = {
         wind_tunnel,
     ],
     units: [
-        pillar
+        pillar,
+        pylon
     ],
     spritesheet: 'spellmasons-mods/The_Doom_Scroll/graphics/spritesheet.json'
 };
