@@ -35,7 +35,7 @@ const unit: UnitSource = {
     radius: 48,
     bloodColor: 8082207,
   },
-  init: (unit: Unit.IUnit, underworld: Underworld) => {
+  init: (unit: IUnit, underworld: Underworld) => {
     Unit.addModifier(unit, "Target Cursed", underworld, predictionGraphicsBlue, 10000)
   },
   action: async (_self: IUnit, _attackTargets: IUnit[], _underworld: Underworld, _canAttackTarget: boolean) => { },

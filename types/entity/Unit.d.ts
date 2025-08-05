@@ -78,6 +78,7 @@ export type IUnit = HasSpace & HasLife & HasMana & HasStamina & {
         [spellId: string]: number;
     };
     chargesMaxAdditional?: number;
+    difficulty: number;
 };
 export declare function create(unitSourceId: string, x: number, y: number, faction: Faction, defaultImagePath: string, unitType: UnitType, unitSubType: UnitSubType, sourceUnitProps: Partial<IUnit> | undefined, underworld: Underworld, prediction?: boolean, creator?: IUnit): IUnit;
 export declare function updateAccessibilityOutline(unit: IUnit, targeted: boolean, outOfRange?: boolean): void;
@@ -86,7 +87,7 @@ interface DifficultyAdjustedUnitStats {
     health: number;
 }
 export declare function adjustUnitPropsDueToDifficulty(stats: DifficultyAdjustedUnitStats, difficultyRatio: number): DifficultyAdjustedUnitStats;
-export declare function adjustUnitDifficulty(unit: IUnit, oldDifficulty: number, newDifficulty: number): void;
+export declare function adjustUnitDifficulty(unit: IUnit, newDifficulty: number): void;
 export declare function addModifier(unit: IUnit, key: string, underworld: Underworld, prediction: boolean, quantity?: number, extra?: object): void;
 export declare function removeRune(unit: IUnit, key: string, underworld: Underworld): void;
 export declare function removeModifier(unit: IUnit, key: string, underworld: Underworld): void;

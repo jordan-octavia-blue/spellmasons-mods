@@ -10,13 +10,13 @@ const {
   cardUtils,
   PlanningView,
   VisualEffects,
-  forcePushAwayFrom
+  forcePushAwayFrom,
 } = globalThis.SpellmasonsAPI
 const {CardCategory, CardRarity, probabilityMap, Faction, UnitType} = commonTypes;
 const {takeDamage} = Unit;
 const { moveAlongVector, normalizedVector } = moveWithCollision;
 const { invert } = Vec;
-const { refundLastSpell } = cards;
+const { refundLastSpell, getCurrentTargets } = cards;
 const { playDefaultSpellSFX } = cardUtils;
 const { addWarningAtMouse, drawUICirclePrediction } = PlanningView;
 const { skyBeam } = VisualEffects;

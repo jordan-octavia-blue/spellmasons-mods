@@ -201,6 +201,8 @@
 	"sourceSize": {"w":64,"h":64}
 }},
 "animations": {
+	"altar": ["altar.png"],
+	"pillar": ["pillarDeath_1.png"],
 	"altarDeath": ["altarDeath_1.png","altarDeath_2.png","altarDeath_3.png","altarDeath_4.png"],
 	"pillarDeath": ["pillarDeath_1.png","pillarDeath_2.png","pillarDeath_3.png","pillarDeath_4.png"]
 },
