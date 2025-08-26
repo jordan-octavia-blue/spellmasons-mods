@@ -43,7 +43,7 @@ const spell: Spell = {
     ignoreRange: true,
     effect: async (state, card, quantity, underworld, prediction) => {
       let promises = [];
-      const collideFnKey = 'earth_push';
+      const collideFnKey = id;
       playDefaultSpellSFX(card, prediction);
       const pickupTargets = state.targetedPickups.filter(p => p.name === 'Trap');
       const pillarTargets = state.targetedUnits.filter(u => u.unitSourceId === 'pillar');
