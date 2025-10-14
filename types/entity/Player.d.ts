@@ -23,6 +23,7 @@ export interface IPlayer {
     name: string;
     color: number;
     wizardType: WizardType;
+    companion?: string;
     lockedDiscardCards: string[];
     colorMagic: number;
     endedTurn: boolean;
@@ -48,6 +49,7 @@ export interface IPlayer {
     stats: Stats;
     cursesChosen: number;
     statPointsUnspent: number;
+    extraStatPointsPerRound: number;
     lockedRunes: {
         index: number;
         key: string;

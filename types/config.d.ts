@@ -65,3 +65,4 @@ export declare const GORU_SOUL_DEBT_PROPORTION_HEALTH_COST: number;
 export declare const NUMBER_OF_TOOLBARS = 7;
 export declare const EXTRA_SOULS_PER_EXTRA_PLAYER = 0.7;
 export declare const MINIBOSS_STRENGTH_MULTIPLIER = 7;
+export declare const BASE_SOULS_LEFT_TO_COLLECT = 20;

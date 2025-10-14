@@ -5,6 +5,7 @@ import * as Obstacle from './entity/Obstacle';
 import * as Player from './entity/Player';
 import * as Upgrade from './Upgrade';
 import * as Cards from './cards';
+import * as Image from './graphics/Image';
 import { BloodParticle } from './graphics/PixiUtils';
 import { Faction, UnitSubType, GameMode, Pie } from './types/commonTypes';
 import type { Vec2 } from "./jmath/Vec";
@@ -85,6 +86,10 @@ export default class Underworld {
         emitter?: Emitter;
         target: Vec2;
         keepOnDeath?: boolean;
+    }[];
+    companions: {
+        image: Image.IImageAnimated;
+        target: Vec2;
     }[];
     activeMods: string[];
     generatingLevel: boolean;
@@ -200,6 +205,7 @@ export default class Underworld {
     changeToHotseatPlayer(player: Player.IPlayer): Promise<void>;
     tryEndPlayerTurnPhase(): Promise<Boolean>;
     endPlayerTurnCleanup(): void;
+    addMissingCompanions(player: Player.IPlayer): void;
     executePlayerTurn(): Promise<void>;
     quicksave(extraInfo?: string): void;
     executeNPCTurn(faction: Faction): Promise<void>;
@@ -264,7 +270,7 @@ type NonFunctionPropertyNames<T> = {
     [K in keyof T]: T[K] extends Function ? never : K;
 }[keyof T];
 type UnderworldNonFunctionProperties = Exclude<NonFunctionPropertyNames<Underworld>, null | undefined>;
-export type IUnderworldSerialized = Omit<Pick<Underworld, UnderworldNonFunctionProperties>, "pie" | "overworld" | "prototype" | "players" | "units" | "unitsPrediction" | "pickups" | "pickupsPrediction" | "random" | "turnInterval" | "liquidSprites" | "particleFollowers" | "walls" | "pathingPolygons" | "triggerGameLoopHeadless" | "_gameLoopHeadless" | "awaitForceMoves" | "queueGameLoop" | "gameLoop" | "gameLoopForceMove" | "gameLoopUnit" | "removeEventListeners"> & {
+export type IUnderworldSerialized = Omit<Pick<Underworld, UnderworldNonFunctionProperties>, "pie" | "overworld" | "prototype" | "players" | "units" | "unitsPrediction" | "pickups" | "pickupsPrediction" | "random" | "turnInterval" | "liquidSprites" | "particleFollowers" | "companions" | "walls" | "pathingPolygons" | "triggerGameLoopHeadless" | "_gameLoopHeadless" | "awaitForceMoves" | "queueGameLoop" | "gameLoop" | "gameLoopForceMove" | "gameLoopUnit" | "removeEventListeners"> & {
     players: Player.IPlayerSerialized[];
     units: Unit.IUnitSerialized[];
     pickups: Pickup.IPickupSerialized[];

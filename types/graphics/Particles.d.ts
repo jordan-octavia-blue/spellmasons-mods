@@ -44,7 +44,7 @@ interface FloatingParticle {
     swirlRadius: number;
     emitter: particles.Emitter;
 }
-export declare function removeFloatingParticlesFor(target: Vec2): Vec2[];
+export declare function removeFloatingParticlesFor(target: Vec2, upTo?: number): Vec2[];
 export declare function createFloatingParticleSystem(center: Vec2, count?: number): void;
 export declare function cleanUpFloatingParticle(p: FloatingParticle): void;
 export {};

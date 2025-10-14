@@ -1,11 +1,13 @@
 import type { Vec2 } from './jmath/Vec';
 import type { IUnit } from './entity/Unit';
+import type { HasSpace } from './entity/Type';
 import Underworld from './Underworld';
 import { IPickup } from './entity/Pickup';
 import { ForceMoveProjectile } from './jmath/moveWithCollision';
 import { CardCost } from './cards/cardUtils';
 import type { IPlayer } from './entity/Player';
 import { ICard } from './cards';
+import { Faction } from './types/commonTypes';
 export type onDealDamage = {
     (damageDealer: IUnit, amount: number, underworld: Underworld, prediction: boolean, damageReciever?: IUnit): number;
 };
@@ -14,6 +16,9 @@ export type onTooltip = {
 };
 export type onCostCalculation = {
     (caster: IPlayer, card: ICard, timesUsedSoFar: number, cardCost: CardCost): CardCost;
+};
+export type onForceMove = {
+    (pushedObject: HasSpace, velocity: Vec2, sourceUnit?: IUnit): Vec2;
 };
 export type onTakeDamage = {
     (unit: IUnit, amount: number, underworld: Underworld, prediction: boolean, damageDealer?: IUnit): number;
@@ -46,10 +51,10 @@ export type onFullTurnCycle = {
     (unit: IUnit, underworld: Underworld, prediction: boolean): Promise<void>;
 };
 export type onTurnStart = {
-    (unit: IUnit, underworld: Underworld, prediction: boolean): Promise<void>;
+    (unit: IUnit, underworld: Underworld, prediction: boolean, faction: Faction): Promise<void>;
 };
 export type onTurnEnd = {
-    (unit: IUnit, underworld: Underworld, prediction: boolean): Promise<void>;
+    (unit: IUnit, underworld: Underworld, prediction: boolean, faction: Faction): Promise<void>;
 };
 export type onDrawSelected = {
     (unit: IUnit, underworld: Underworld, prediction: boolean): Promise<void>;
@@ -82,6 +87,9 @@ declare const _default: {
     };
     onCostCalculationSource: {
         [name: string]: onCostCalculation;
+    };
+    onForceMoveSource: {
+        [name: string]: onForceMove;
     };
     onDeathSource: {
         [name: string]: onDeath;

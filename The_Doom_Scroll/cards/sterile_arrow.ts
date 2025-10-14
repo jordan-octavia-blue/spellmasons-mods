@@ -61,7 +61,7 @@ const spell: Spell = {
     thumbnail: 'spellmasons-mods/The_Doom_Scroll/graphics/spellIconSterileArrow.png',
     description: 'Conjures a mystical arrow that deals 20 damage and TRANSFERS curses from the caster to the victim.',
     effect: async (state, card, quantity, underworld, prediction) => serileArrowEffect(state, card, quantity, underworld, prediction).then((state) => {
-      Purify.apply(state.casterUnit, underworld)
+      Purify.apply(state.casterUnit, underworld, prediction, state)
       return state;
     }),
   },

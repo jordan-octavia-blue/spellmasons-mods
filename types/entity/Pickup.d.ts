@@ -87,6 +87,7 @@ export declare function load(pickup: IPickupSerialized, underworld: Underworld, 
 export declare function removePickup(pickup: IPickup, underworld: Underworld, prediction: boolean): void;
 export declare function triggerPickup(pickup: IPickup, unit: IUnit, player: Player.IPlayer | undefined, underworld: Underworld, prediction: boolean): void;
 export declare function tryTriggerPickup(pickup: IPickup, unit: IUnit, underworld: Underworld, prediction: boolean): void;
+export declare const manaPotionRestoreAmount = 40;
 export declare const spike_damage = 30;
 export declare const PICKUP_SPIKES_NAME = "Trap";
 export declare const PORTAL_PURPLE_NAME = "Portal";
