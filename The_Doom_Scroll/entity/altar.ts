@@ -39,6 +39,7 @@ const unit: UnitSource = {
   spawnParams: {
     probability:0,
     excludeMiniboss:true,
+    excludeSummonCard:true,
     budgetCost:0,
     unavailableUntilLevelIndex:20,
   },

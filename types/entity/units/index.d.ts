@@ -25,6 +25,7 @@ interface SpawnParams {
     budgetCost: number;
     unavailableUntilLevelIndex: number;
     excludeMiniboss?: boolean;
+    excludeSummonCard?: boolean;
 }
 import Underworld from '../../Underworld';
 import { Localizable } from '../../localization';
