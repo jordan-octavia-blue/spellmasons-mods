@@ -36,6 +36,12 @@ const unit: UnitSource = {
     radius: 48,
     bloodColor: 8082207,
   },
+  spawnParams: {
+    probability:0,
+    excludeMiniboss:true,
+    budgetCost:0,
+    unavailableUntilLevelIndex:20,
+  },
   init: (unit: IUnit, underworld: Underworld) => {
       Unit.addEvent(unit, EVENT_REMOVE_ON_DEATH_ID);
       cardsUtil.getOrInitModifier(unit, "Target Cursed", { isCurse: false, quantity: 10000, keepOnDeath: false}, () => { });
