@@ -31,8 +31,7 @@ export type IUnit = HasSpace & HasLife & HasMana & HasStamina & {
     type: 'unit';
     id: number;
     soulFragments: number;
-    soulLeftToCollect?: number;
-    soulLeftToCollectMax?: number;
+    soulFragmentsMax?: number;
     soulsBeingCollected?: boolean;
     unitSourceId: string;
     real?: IUnit;

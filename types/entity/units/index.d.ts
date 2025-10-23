@@ -24,6 +24,7 @@ interface SpawnParams {
     probability: number;
     budgetCost: number;
     unavailableUntilLevelIndex: number;
+    maxQuantityPerLevel?: number;
     excludeMiniboss?: boolean;
     excludeSummonCard?: boolean;
 }
