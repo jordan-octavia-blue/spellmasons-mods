@@ -11,4 +11,5 @@ declare global {
     var predictionGraphicsRed: PIXI.Graphics | undefined;
     var predictionGraphicsWhite: PIXI.Graphics | undefined;
     var predictionGraphicsBlue: PIXI.Graphics | undefined;
+    var selectedUnitGraphics: PIXI.Graphics | undefined;
 }
