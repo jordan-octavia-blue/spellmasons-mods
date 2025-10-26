@@ -3,15 +3,17 @@ import assimilate from './cards/assimilate';
 import bloodied_arrow from './cards/bloodied_arrow';
 import bloodthorn_arrow from './cards/bloodthorn_arrow';
 import earth_push from './cards/earth_push';
+import raise_altar from './cards/raise_altar'
 import raise_pillar from './cards/raise_pillar';
 import raise_wall from './cards/raise_wall';
+import sterile_arrow from './cards/sterile_arrow'
 import sunlight from './cards/sunlight';
 import target_pillar from './cards/target_pillar';
 import target_stomp from './cards/target_stomp';
 import wind_explosion from './cards/wind_explosion';
 import wind_tunnel from './cards/wind_tunnel';
 import pillar from "./entity/pillar";
-import pylon from "./entity/altar";
+import altar from "./entity/altar";
 console.log('jtest', pillar)
 ///<reference path="..globalTypes.d.ts"/>
 const mod: Mod = {
@@ -26,6 +28,8 @@ const mod: Mod = {
         earth_push,
         raise_pillar,
         raise_wall,
+        raise_altar,
+        sterile_arrow,
         sunlight,
         target_pillar,
         target_stomp,
@@ -34,7 +38,7 @@ const mod: Mod = {
     ],
     units: [
         pillar,
-        pylon
+        altar
     ],
     spritesheet: 'spellmasons-mods/The_Doom_Scroll/graphics/spritesheet.json'
 };

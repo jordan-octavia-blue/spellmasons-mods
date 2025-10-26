@@ -23,7 +23,7 @@ import type { HasSpace } from '../../types/entity/Type';
 import { pillarId } from './raise_pillar';
 import type { IUnit } from '../../types/entity/Unit';
 
-const id = 'earth_push';
+const id = 'Earth Push';
 const defaultPushDistance =140;
 const spell: Spell = {
   card: {

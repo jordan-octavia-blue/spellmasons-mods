@@ -10,13 +10,13 @@ const {
   cardUtils,
   PlanningView,
   VisualEffects,
-  forcePushAwayFrom,
+  forcePushAwayFrom
 } = globalThis.SpellmasonsAPI
 const {CardCategory, CardRarity, probabilityMap, Faction, UnitType} = commonTypes;
 const {takeDamage} = Unit;
 const { moveAlongVector, normalizedVector } = moveWithCollision;
 const { invert } = Vec;
-const { refundLastSpell, getCurrentTargets } = cards;
+const { refundLastSpell } = cards;
 const { playDefaultSpellSFX } = cardUtils;
 const { addWarningAtMouse, drawUICirclePrediction } = PlanningView;
 const { skyBeam } = VisualEffects;
@@ -28,7 +28,7 @@ import type Underworld from '../../types/Underworld';
 import { pillarId } from './raise_pillar';
 
 
-const id = 'raise_wall';
+const id = 'Raise Wall';
 export { id as raiseWallId };
 const range = 250;
 const baseWidth = 48;
@@ -50,14 +50,11 @@ const spell: Spell = {
     effect: async (state, card, quantity, underworld, prediction, outOfRange) => {
       const unitId = 'pillar';
             const sourceUnit = allUnits[unitId];
-            let spawnpoints: Vec2[] = getCurrentTargets(state);
+            const vector = normalizedVector(state.casterUnit, state.castLocation).vector;
+            if (vector) {
+            let spawnpoints: Vec2[] = getSpawnPoints(state.castLocation, vector, baseWidth, quantity);
             const length = spawnpoints.length;
-            if (length == 0) {
-              spawnpoints.push(state.castLocation);
-            }
             for (let i = 0; i < length; i++) {
-              const vector = normalizedVector(state.casterUnit, state.castLocation).vector;
-              if (vector) {
               const target = spawnpoints[i];
               if (sourceUnit && target) {
                 const summonLocation = {
@@ -104,8 +101,8 @@ const spell: Spell = {
               } else {
                 console.error(`Source unit ${unitId} is missing`);
               }
-            }
           }
+            }
             return state;
     },
   },

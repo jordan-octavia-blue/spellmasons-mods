@@ -24,7 +24,7 @@ import type Underworld from '../../types/Underworld';
 
 
 
-const id = 'raise_pillar';
+const id = 'Raise Pillar';
 export { id as pillarId };
 const spell: Spell = {
   card: {
