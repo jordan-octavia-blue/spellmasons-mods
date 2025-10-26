@@ -34,6 +34,18 @@ const unit: UnitSource = {
     radius: 48,
     bloodColor: 8082207,
   },
+  spawnParams: {
+    probability:0,
+    excludeMiniboss:true,
+    excludeSummonCard:true,
+    budgetCost:0,
+    unavailableUntilLevelIndex:20,
+  },
+  init: (unit, underworld: Underworld) => {
+    if (unit.image) {
+      unit.image.sprite.anchor.y = 0.7;
+    }
+  },
   action: async (_self: IUnit, _attackTargets: IUnit[], _underworld: Underworld, _canAttackTarget: boolean) => { },
   getUnitAttackTargets: (unit: IUnit, underworld: Underworld) => { return []; }
 };

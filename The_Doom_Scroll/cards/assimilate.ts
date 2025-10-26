@@ -36,6 +36,7 @@ const spell: Spell = {
     thumbnail: 'spellmasons-mods/The_Doom_Scroll/graphics/spellIconAssimilate.png',
     supportQuantity: true,
     requiresFollowingCard: false,
+    allowNonUnitTarget: true,
     omitForWizardType: ['Deathmason', 'Goru'],
     description: 'Connects the caster to 5 nearby targets per cast, sacrificing them and funneling their power into the caster. Can only be cast once',
     effect: async (state, card, quantity, underworld, prediction) => {

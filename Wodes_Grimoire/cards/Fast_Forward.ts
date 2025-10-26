@@ -75,7 +75,7 @@ async function procEvents(unit: IUnit, underworld: Underworld, prediction: boole
             //Made into function because eventName points to a modifier (probably) whose arguments need to be pass in.
             const fns = Events.default.onTurnStartSource[eventName];
             if (fns) {
-                await fns(unit, underworld, prediction); //Returns boolean, but ignored.
+                await fns(unit, underworld, prediction, unit.faction); //Returns boolean, but ignored.
             }
         }
     }
@@ -84,7 +84,7 @@ async function procEvents(unit: IUnit, underworld: Underworld, prediction: boole
         if (eventName) {
             const fne = Events.default.onTurnEndSource[eventName];
             if (fne) {
-                await fne(unit, underworld, prediction);
+                await fne(unit, underworld, prediction, unit.faction);
             }
         }
     }

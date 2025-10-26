@@ -10,13 +10,13 @@ const {
   cardUtils,
   PlanningView,
   VisualEffects,
-  forcePushAwayFrom
+  forcePushAwayFrom,
 } = globalThis.SpellmasonsAPI
-const {CardCategory, CardRarity, probabilityMap, Faction, UnitType} = commonTypes;
-const {takeDamage} = Unit;
+const { CardCategory, CardRarity, probabilityMap, Faction, UnitType } = commonTypes;
+const { takeDamage } = Unit;
 const { moveAlongVector, normalizedVector } = moveWithCollision;
 const { invert } = Vec;
-const { refundLastSpell } = cards;
+const { refundLastSpell, getCurrentTargets } = cards;
 const { playDefaultSpellSFX } = cardUtils;
 const { addWarningAtMouse, drawUICirclePrediction } = PlanningView;
 const { skyBeam } = VisualEffects;
@@ -49,80 +49,83 @@ const spell: Spell = {
     allowNonUnitTarget: true,
     effect: async (state, card, quantity, underworld, prediction, outOfRange) => {
       const unitId = 'pillar';
-            const sourceUnit = allUnits[unitId];
-            const vector = normalizedVector(state.casterUnit, state.castLocation).vector;
-            if (vector) {
-            let spawnpoints: Vec2[] = getSpawnPoints(state.castLocation, vector, baseWidth, quantity);
-            const length = spawnpoints.length;
-            for (let i = 0; i < length; i++) {
-              const target = spawnpoints[i];
-              if (sourceUnit && target) {
-                const summonLocation = {
-                  x: target.x,
-                  y: target.y
-                }
-                if (underworld.isCoordOnWallTile(summonLocation)) {
-                  if (prediction) {
-                    const WARNING = "Invalid Summon Location";
-                    addWarningAtMouse(WARNING);
-                  } else {
-                    refundLastSpell(state, prediction, 'Invalid summon location, mana refunded.')
-                  }
-                  return state;
-                }
-                playDefaultSpellSFX(card, prediction);
-                if (prediction) {
-                  drawUICirclePrediction(target, 32, 0xffffff);
-                }
-                const unit = Unit.create(
-                  sourceUnit.id,
-                  summonLocation.x,
-                  summonLocation.y,
-                  Faction.ALLY,
-                  sourceUnit.info.image,
-                  UnitType.AI,
-                  sourceUnit.info.subtype,
-                  {
-                    ...sourceUnit.unitProps,
-                    healthMax: (sourceUnit.unitProps.healthMax || config.UNIT_BASE_HEALTH),
-                    health: (sourceUnit.unitProps.health || config.UNIT_BASE_HEALTH),
-                    damage: (sourceUnit.unitProps.damage || 0) * quantity,
-                    strength: quantity
-                  },
-                  underworld,
-                  prediction,
-                  state.casterUnit
-                );
-                pillarExplode(unit, 32, 10, underworld, prediction, state);
-                if (!prediction) {
-                  // Animate effect of unit spawning from the sky
-                  skyBeam(unit);
-                }
-              } else {
-                console.error(`Source unit ${unitId} is missing`);
-              }
-          }
+      const sourceUnit = allUnits[unitId];
+      const vector = normalizedVector(state.casterUnit, state.castLocation).vector;
+      if (vector) {
+        let spawnpoints: Vec2[] = getSpawnPoints(state.castLocation, vector, baseWidth, quantity);
+        const length = spawnpoints.length;
+        if (length == 0) {
+          spawnpoints.push(state.castLocation);
+        }
+        for (let i = 0; i < length; i++) {
+          const target = spawnpoints[i];
+          if (sourceUnit && target) {
+            const summonLocation = {
+              x: target.x,
+              y: target.y
             }
-            return state;
+            if (underworld.isCoordOnWallTile(summonLocation)) {
+              if (prediction) {
+                const WARNING = "Invalid Summon Location";
+                addWarningAtMouse(WARNING);
+              } else {
+                refundLastSpell(state, prediction, 'Invalid summon location, mana refunded.')
+              }
+              return state;
+            }
+            playDefaultSpellSFX(card, prediction);
+            if (prediction) {
+              drawUICirclePrediction(target, 32, 0xffffff);
+            }
+            const unit = Unit.create(
+              sourceUnit.id,
+              summonLocation.x,
+              summonLocation.y,
+              Faction.ALLY,
+              sourceUnit.info.image,
+              UnitType.AI,
+              sourceUnit.info.subtype,
+              {
+                ...sourceUnit.unitProps,
+                healthMax: (sourceUnit.unitProps.healthMax || config.UNIT_BASE_HEALTH),
+                health: (sourceUnit.unitProps.health || config.UNIT_BASE_HEALTH),
+                damage: (sourceUnit.unitProps.damage || 0) * quantity,
+                strength: quantity
+              },
+              underworld,
+              prediction,
+              state.casterUnit
+            );
+            pillarExplode(unit, 32, 10, underworld, prediction, state);
+            if (!prediction) {
+              // Animate effect of unit spawning from the sky
+              skyBeam(unit);
+            }
+          } else {
+            console.error(`Source unit ${unitId} is missing`);
+          }
+        }
+      }
+      return state;
     },
   },
 };
 export function getSpawnPoints(castLocation: Vec2, vector: Vec2, width: number, quantity: number): Vec2[] {
-    let points: Vec2[] = [];
-    points.push(castLocation);
-    const p1 = moveAlongVector(castLocation, invert(vector), -width);
-    const p2 = moveAlongVector(castLocation, invert(vector), width);
-    points.push(p1);
-    points.push(p2);
-    if (quantity > 1) {
-        for (let i = 2; i <= quantity; i++) {
-            const p3 = moveAlongVector(castLocation, invert(vector), -width*i);
-            const p4 = moveAlongVector(castLocation, invert(vector), width*i);
-            points.push(p3);
-            points.push(p4);
-        }
+  let points: Vec2[] = [];
+  points.push(castLocation);
+  const p1 = moveAlongVector(castLocation, invert(vector), -width);
+  const p2 = moveAlongVector(castLocation, invert(vector), width);
+  points.push(p1);
+  points.push(p2);
+  if (quantity > 1) {
+    for (let i = 2; i <= quantity; i++) {
+      const p3 = moveAlongVector(castLocation, invert(vector), -width * i);
+      const p4 = moveAlongVector(castLocation, invert(vector), width * i);
+      points.push(p3);
+      points.push(p4);
     }
-    return points;
+  }
+  return points;
 }
 const millisToGrow = 1000;
 function distanceAlongColumn(point: Vec2, columnOrigin: Vec2, vector: Vec2): number {
@@ -168,7 +171,7 @@ async function pillarExplode(caster: IUnit, radius: number, damage: number, unde
   underworld.getPickupsWithinDistanceOfTarget(caster, radius, prediction)
     .forEach(p => {
       // Push pickups away    
-    const pushDistance = 32
+      const pushDistance = 32
       forcePushAwayFrom(p, state.casterUnit, pushDistance, underworld, prediction, caster);
     })
 }

@@ -55,10 +55,13 @@ import * as EffectsHeal from './effects/heal';
 import * as explode from "./effects/explode";
 import * as commonTypes from './types/commonTypes';
 import * as particleEmitter from 'jdoleary-fork-pixi-particle-emitter';
+import * as Arrow from "./cards/arrow";
+import * as Purify from "./cards/purify";
 declare const SpellmasonsAPI: {
     Angle: typeof Angle;
     AnimationCombos: typeof AnimationCombos;
     ArrayUtil: typeof ArrayUtil;
+    Arrow: typeof Arrow;
     cards: typeof cards;
     cardsUtil: typeof cardsUtil;
     CardUI: typeof CardUI;
@@ -77,6 +80,7 @@ declare const SpellmasonsAPI: {
     forcePushAwayFrom: typeof forcePushAwayFrom;
     forcePushToDestination: typeof forcePushToDestination;
     EffectsHeal: typeof EffectsHeal;
+    handmadeMaps: import("./MapsHandmade").HandmadeMap[];
     ImmediateModeSprites: typeof ImmediateModeSprites;
     inLiquid: typeof inLiquid;
     JAudio: typeof JAudio;
@@ -104,6 +108,7 @@ declare const SpellmasonsAPI: {
     PlayerUtils: typeof PlayerUtils;
     Polygon2: typeof Polygon2;
     Projectile: typeof Projectile;
+    Purify: typeof Purify;
     rand: typeof rand;
     rangedAction: typeof rangedAction;
     Rect: typeof Rect;

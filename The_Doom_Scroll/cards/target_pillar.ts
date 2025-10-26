@@ -3,6 +3,7 @@ const {
   Unit,
   commonTypes,
   cards,
+  math,
 } = globalThis.SpellmasonsAPI
 const { isUnit } = Unit;
 const { CardCategory, CardRarity, probabilityMap } = commonTypes;
@@ -10,7 +11,7 @@ const {getCurrentTargets, addTarget} = cards;
 import type { Vec2 } from '../../types/jmath/Vec';
 import type { Spell } from '../../types/cards';
 import { pillarId } from './raise_pillar';
-import { sortCosestTo } from '../../types/jmath/math'; 
+const { sortCosestTo } = math
 
 const id = 'Target Pillar';
 const spell: Spell = {

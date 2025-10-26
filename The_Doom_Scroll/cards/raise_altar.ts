@@ -21,6 +21,7 @@ import type { Spell } from '../../types/cards';
 import type { IUnit } from '../../types/entity/Unit';
 import type { Vec2 } from '../../types/jmath/Vec';
 import type Underworld from '../../types/Underworld';
+import { ALTAR_UNIT_ID } from '../entity/altar';
 
 
 
@@ -35,11 +36,11 @@ const spell: Spell = {
     healthCost: 0,
     expenseScaling: 2,
     probability: probabilityMap[CardRarity.COMMON],
-    thumbnail: 'spellmasons-mods/The_Doom_Scroll/graphics/spellIconRaise_Pillar.png',
+    thumbnail: 'spellmasons-mods/The_Doom_Scroll/graphics/spellIconRaise_Altar.png',
     description: 'Raise a mana conducive Altar at the target location, acting as a target for future spells cast',
     allowNonUnitTarget: true,
     effect: async (state, card, quantity, underworld, prediction) => {
-      const unitId = 'altar';
+      const unitId = ALTAR_UNIT_ID; 
       const sourceUnit = allUnits[unitId];
       if (sourceUnit) {
         const summonLocation = {

@@ -31,7 +31,7 @@ const spell: Spell = {
     id,
     category: CardCategory.Soul,
     sfx: 'summonDecoy',
-    supportQuantity: true,
+    supportQuantity: false,
     manaCost: 20,
     healthCost: 0,
     expenseScaling: 2,
@@ -43,46 +43,50 @@ const spell: Spell = {
       const unitId = 'pillar';
       const sourceUnit = allUnits[unitId];
       if (sourceUnit) {
-        const summonLocation = {
-          x: state.castLocation.x,
-          y: state.castLocation.y
-        }
-        if (underworld.isCoordOnWallTile(summonLocation)) {
-          if (prediction) {
-            const WARNING = "Invalid Summon Location";
-            addWarningAtMouse(WARNING);
-          } else {
-            refundLastSpell(state, prediction, 'Invalid summon location, mana refunded.')
+        const currentTargets = getCurrentTargets(state)
+        const newPillarLocations = currentTargets.length ? currentTargets : [state.castLocation]
+        for(let target of newPillarLocations){
+          const summonLocation = {
+            x: target.x,
+            y: target.y
           }
-          return state;
-        }
-        playDefaultSpellSFX(card, prediction);
-        const unit = Unit.create(
-          sourceUnit.id,
-          summonLocation.x,
-          summonLocation.y,
-          Faction.ALLY,
-          sourceUnit.info.image,
-          UnitType.AI,
-          sourceUnit.info.subtype,
-          {
-            ...sourceUnit.unitProps,
-            healthMax: (sourceUnit.unitProps.healthMax || config.UNIT_BASE_HEALTH) * quantity,
-            health: (sourceUnit.unitProps.health || config.UNIT_BASE_HEALTH) * quantity,
-            damage: (sourceUnit.unitProps.damage || 0) * quantity,
-            strength: quantity
-          },
-          underworld,
-          prediction,
-          state.casterUnit
-        );
-        if (prediction) {
-          drawUICirclePrediction(unit, 32, 0xffffff);
-        }
-        pillarExplode(unit, 32, 10, underworld, prediction, state);
-        if (!prediction) {
-          // Animate effect of unit spawning from the sky
-          skyBeam(unit);
+          if (underworld.isCoordOnWallTile(summonLocation)) {
+            if (prediction) {
+              const WARNING = "Invalid Summon Location";
+              addWarningAtMouse(WARNING);
+            } else {
+              refundLastSpell(state, prediction, 'Invalid summon location, mana refunded.')
+            }
+            return state;
+          }
+          playDefaultSpellSFX(card, prediction);
+          const unit = Unit.create(
+            sourceUnit.id,
+            summonLocation.x,
+            summonLocation.y,
+            Faction.ALLY,
+            sourceUnit.info.image,
+            UnitType.AI,
+            sourceUnit.info.subtype,
+            {
+              ...sourceUnit.unitProps,
+              healthMax: (sourceUnit.unitProps.healthMax || config.UNIT_BASE_HEALTH) * quantity,
+              health: (sourceUnit.unitProps.health || config.UNIT_BASE_HEALTH) * quantity,
+              damage: (sourceUnit.unitProps.damage || 0) * quantity,
+              strength: quantity
+            },
+            underworld,
+            prediction,
+            state.casterUnit
+          );
+          if (prediction) {
+            drawUICirclePrediction(unit, 32, 0xffffff);
+          }
+          pillarExplode(unit, 32, 10, underworld, prediction, state);
+          if (!prediction) {
+            // Animate effect of unit spawning from the sky
+            skyBeam(unit);
+          }
         }
       } else {
         console.error(`Source unit ${unitId} is missing`);
@@ -92,7 +96,9 @@ const spell: Spell = {
   },
 };
 async function pillarExplode(caster: IUnit, radius: number, damage: number, underworld: Underworld, prediction: boolean, state: any) {
-  const units = underworld.getUnitsWithinDistanceOfTarget(caster, radius, prediction).filter(u => u.id != caster.id).filter(u => u.unitSourceId != 'pillar');
+  const units = underworld.getUnitsWithinDistanceOfTarget(caster, radius, prediction)
+    .filter(u => u.id != caster.id)
+    .filter(u => u.unitSourceId != 'pillar');
   units.forEach(u => {
     // Deal damage to units
     takeDamage({

@@ -62,7 +62,7 @@ const spell: Spell = {
 function add(unit: IUnit, _underworld: Underworld, prediction: boolean, quantity: number, extra: any) {
     let firstStack = !unit.events.includes(cardId);
     const modifier = cardsUtil.getOrInitModifier(unit, cardId, {
-        isCurse: false, quantity, persistBetweenLevels: false,
+        isCurse: true, quantity, persistBetweenLevels: false,
     }, () => {
         //Register onTurn
         if (firstStack) {

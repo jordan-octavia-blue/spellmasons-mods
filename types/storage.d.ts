@@ -4,6 +4,7 @@ export declare const STORAGE_ID_PLAYER_COLOR = "player-color";
 export declare const STORAGE_ID_PLAYER_COLOR_MAGIC = "player-color-magic";
 export declare const STORAGE_ID_PLAYER_NAME = "player-name";
 export declare const STORAGE_ID_WIZARD_TYPE = "wizard-type";
+export declare const STORAGE_ID_FAMILIAR = "familiar";
 export declare const STORAGE_ID_UI_ZOOM = "uiZoom";
 export declare const STORAGE_CONTROLS_KEY = "controls";
 export declare const ENEMY_ENCOUNTERED_STORAGE_KEY = "enemyEncountered";

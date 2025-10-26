@@ -5,6 +5,7 @@
   "main": "vite.config.js",
   "scripts": {
     "build": "tsc && vite build",
+    "copy_to_core": "cp ./build/SpellmasonsMods.cjs.js ../Golems/src/SpellmasonsMods.cjs.js && cp ./build/SpellmasonsMods.cjs.js ../Golems/public/spellmasons-mods/build/SpellmasonsMods.cjs.js",
     "tsc": "tsc"
   },
   "repository": {

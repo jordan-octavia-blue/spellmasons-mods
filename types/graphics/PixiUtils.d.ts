@@ -79,7 +79,7 @@ export declare function startBloodParticleSplatter(underworld: Underworld, damag
     maxRotationOffset: number;
     numberOfParticles: number;
 }): void;
-export declare function tickParticle(particle: BloodParticle): boolean;
+export declare function tickParticle(particle: BloodParticle, underworld: Underworld): boolean;
 export declare const CLASS_HUD_HIDDEN = "HUD-hidden";
 export declare const CLASS_VISIBILITY_ATTENTION_MARKERS = "attention-markers-hidden";
 export declare const CLASS_VISIBILITY_HEALTH_BARS = "health-bars-hidden";

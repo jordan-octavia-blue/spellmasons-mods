@@ -7,6 +7,7 @@ import DaiNekoIchis_TomeOfSpells from './DaiNekoIchis_TomeOfSpells/Index';
 import BogiacsSpells from './Bogiacs_Spells/BogiacsSpells';
 import Doom_Scroll from './The_Doom_Scroll/Doom_Scroll';
 import Runic_Alphabet from './RunicAlphabet/RunicAlphabet';
+import DoriososMinions from './Doriosos_minions/doriosos_minions';
 
 const mods: commonTypes.Mod[] = [
     UndeadBlade,
@@ -16,6 +17,7 @@ const mods: commonTypes.Mod[] = [
     BogiacsSpells,
     Doom_Scroll,
     Runic_Alphabet,
+    DoriososMinions,
 ];
 globalThis.mods = globalThis.mods !== undefined ? [...globalThis.mods, ...mods] : mods;
 console.log('Mods: Add mods', globalThis.mods);

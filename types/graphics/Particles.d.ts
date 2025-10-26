@@ -5,6 +5,7 @@ import { BloodParticle } from './PixiUtils';
 import type Underworld from '../Underworld';
 import { Container, ParticleContainer } from 'pixi.js';
 import { JEmitter } from '../types/commonTypes';
+import { IUnit } from '../entity/Unit';
 export declare const containerParticles: ParticleContainer | undefined;
 export declare const containerParticlesUnderUnits: ParticleContainer | undefined;
 export declare function wrappedEmitter(config: particles.EmitterConfigV3, container: Container, resolver?: () => void): {
@@ -43,8 +44,9 @@ interface FloatingParticle {
     floatAmplitude: number;
     swirlRadius: number;
     emitter: particles.Emitter;
+    ownerUnitId: number;
 }
-export declare function removeFloatingParticlesFor(target: Vec2): Vec2[];
-export declare function createFloatingParticleSystem(center: Vec2, count?: number): void;
+export declare function removeFloatingParticlesFor(target: IUnit, upTo?: number): Vec2[];
+export declare function createFloatingParticleSystem(center: IUnit, count?: number): void;
 export declare function cleanUpFloatingParticle(p: FloatingParticle): void;
 export {};
