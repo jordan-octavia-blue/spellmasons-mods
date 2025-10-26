@@ -4,8 +4,8 @@ import bloodied_arrow from './cards/bloodied_arrow';
 import sterile_arrow from './cards/sterile_arrow';
 import bloodthorn_arrow from './cards/bloodthorn_arrow';
 import earth_push from './cards/earth_push';
+import raise_altar from './cards/raise_altar'
 import raise_pillar from './cards/raise_pillar';
-import raise_altar from './cards/raise_altar';
 import raise_wall from './cards/raise_wall';
 import sunlight from './cards/sunlight';
 import target_pillar from './cards/target_pillar';
@@ -28,6 +28,8 @@ const mod: Mod = {
         raise_pillar,
         raise_altar,
         raise_wall,
+        raise_altar,
+        sterile_arrow,
         sunlight,
         target_pillar,
         target_stomp,
