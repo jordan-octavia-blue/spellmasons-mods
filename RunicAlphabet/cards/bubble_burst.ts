@@ -16,11 +16,11 @@ const { raceTimeout } = JPromise;
 const { easeOutCubic } = Easing;
 const { drawUICirclePrediction } = PlanningView;
 const { defaultTargetsForAllowNonUnitTargetTargetingSpell, getCurrentTargets } = cards;
-import type { HasSpace } from '../../../entity/Type';
-import type { Vec2 } from '../../../jmath/Vec';
-import type { IUnit } from '../../../entity/Unit';
-import type Underworld from '../../../Underworld';
-import type { Spell } from '../../../cards/index';
+import type { HasSpace } from '../../types/entity/Type';
+import type { Vec2 } from '../../types/jmath/Vec';
+import type { IUnit } from '../../types/entity/Unit';
+import type Underworld from '../../types/Underworld';
+import type { Spell } from '../../types/cards/index';
 
 const SubmergeId = 'Submerge';
 interface Circle {
@@ -111,7 +111,6 @@ export async function animateTargetCircle(circles: Circle[], underworld: Underwo
     // Keep track of which entities have been targeted so far for the sake
     // of making a new sfx when a new entity gets targeted
     const entitiesTargeted: HasSpace[] = [];
-    playSFXKey('targeting');
     return raceTimeout(timeoutMsAnimation, 'animatedExpand', new Promise<void>(resolve => {
         animateFrame(circles, Date.now(), entitiesTargeted, underworld, resolve, omitTargets)();
     })).then(() => {
@@ -145,7 +144,6 @@ function animateFrame(circles: Circle[], startTime: number, entitiesTargeted: Ha
                     }
                     if (!entitiesTargeted.includes(v)) {
                         entitiesTargeted.push(v);
-                        playSFXKey('targetAquired');
                     }
                     globalThis.predictionGraphicsBlue?.drawCircle(v.x, v.y, config.COLLISION_MESH_RADIUS);
                 })

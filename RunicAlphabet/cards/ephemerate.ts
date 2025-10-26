@@ -6,9 +6,9 @@ const {
 } = globalThis.SpellmasonsAPI;
 const { CardCategory, CardRarity, probabilityMap } = commonTypes;
 const { getOrInitModifier } = cardsUtil;
-import type { Spell } from '../../../cards/index';
-import type Underworld from '../../../Underworld';
-import type { IUnit } from '../../../entity/Unit';
+import type { Spell } from '../../types/cards/index';
+import type Underworld from '../../types/Underworld';
+import type { IUnit } from "../../types/entity/Unit";
 
 export const id = 'Ephemerate';
 function add(unit: IUnit, underworld: Underworld, prediction: boolean, quantity: number, extra?: any) {

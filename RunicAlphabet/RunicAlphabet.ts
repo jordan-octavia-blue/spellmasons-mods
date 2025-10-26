@@ -623,7 +623,7 @@ const mod: Mod = {
     modName: 'Runic Alphabet',
     author: 'Bug Jones & Dorioso',
     description: "Adds a variety of new runes, and a handful of spells to support them.",
-    screenshot: 'TODO',
+    screenshot: 'runicIcon',
     modifiers: [modifierHardLanding,
         modifierVampirism,
         modifierAcrobatics,

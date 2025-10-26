@@ -21,7 +21,7 @@ const { playDefaultSpellSFX } = cardUtils;
 const { addWarningAtMouse, drawUICirclePrediction } = PlanningView;
 const { skyBeam } = VisualEffects;
 const { allUnits } = units;
-import { getCurrentTargets, type Spell } from '../../types/cards';
+import type { Spell } from '../../types/cards';
 import type { IUnit } from '../../types/entity/Unit';
 import type { Vec2 } from '../../types/jmath/Vec';
 import type Underworld from '../../types/Underworld';
