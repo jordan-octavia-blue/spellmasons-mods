@@ -503,10 +503,11 @@ const blurEvent: Events = {
         if (modifier) {
             // Blur will not negate damage if we are being healed
             if (damageDealer && amount > 0) {
-                const roll = randInt(1, 100);
+                const seed = rand.seedrandom(rand.getUniqueSeedString(underworld) + `${unit.id}-${damageDealer?.id || 0}`);
+                const roll = randInt(1, 100, seed);
                 if (roll <= modifier.quantity) {
                     amount = 0;
-                    FloatingText.default({ coords: unit, text: `Dodged!`, prediction });
+                    FloatingText.default({ coords: unit, text: BlurId, prediction });
                 }
             }
         }
@@ -589,7 +590,7 @@ const magnetismEvent: Events = {
     onTurnStart: async (unit: IUnit, underworld: Underworld, prediction: boolean) => {
         const modifier = unit.modifiers[magnetismId];
         if (modifier) {
-            const chargedUnits = underworld.getAllUnits(prediction).filter(u => u.alive);
+            const chargedUnits = underworld.getAllUnits(prediction).filter(u => u.alive && u.faction != unit.faction).slice(0,modifier.quantity);
             const promises = [];
             for (let chargedUnit of chargedUnits) {
                 promises.push(forcePushTowards(chargedUnit, unit, 140, underworld, prediction));
