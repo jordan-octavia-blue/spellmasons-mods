@@ -160,6 +160,7 @@ const modifierMeander: Modifiers = {
     id: meanderId,
     description: 'Decrease movement speed by 10% per stack',
     _costPerUpgrade: -10,
+    maxUpgradeCount: 10,
     isMalady: true,
     add: (unit: IUnit, underworld: Underworld, prediction: boolean, quantity: number = 1) => {
         const player = underworld.players.find(p => p.unit == unit);
