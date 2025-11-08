@@ -631,7 +631,7 @@ const mod: Mod = {
     modName: 'Runic Alphabet',
     author: 'Bug Jones & Dorioso',
     description: "Adds a variety of new runes, and a handful of spells to support them.",
-    screenshot: 'runicIcon',
+    screenshot: 'spellmasons-mods/RunicAlphabet/graphics/runic_alphabet.png',
     modifiers: [modifierHardLanding,
         modifierVampirism,
         modifierAcrobatics,
@@ -667,6 +667,6 @@ const mod: Mod = {
         //lunge
     ],
     //units: [werewolf],
-    spritesheet: 'DevelopmentMods/RunicAlphabet/graphics/spritesheet.json'
+    spritesheet: 'spellmasons-mods/RunicAlphabet/graphics/spritesheet.json'
 };
 export default mod;

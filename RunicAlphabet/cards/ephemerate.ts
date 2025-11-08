@@ -26,7 +26,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.FORBIDDEN],
-        thumbnail: 'spellIconEphemerate.png',
+        thumbnail: 'spellmasons-mods/RunicAlphabet/graphics/evapo.png',
         description: `Causes the caster to phase out of reality, allowing them to phase back in anywhere on the map. Warning: Excessive warping may incur true damage to the caster.`,
         allowNonUnitTarget: true,
         supportQuantity: true,

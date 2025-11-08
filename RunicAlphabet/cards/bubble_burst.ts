@@ -40,7 +40,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.RARE],
-        thumbnail: 'spellIconBubbleBurst.png',
+        thumbnail: 'spellmasons-mods/RunicAlphabet/graphics/bubble.png',
         requiresFollowingCard: false,
         description: 'Summons a damaging bubble that pops and deals liquid damage to all units within radius.',
         allowNonUnitTarget: true,
