@@ -41,6 +41,7 @@ const {
     PlanningView,
     units,
     rand,
+    ParticleCollection,
 } = globalThis.SpellmasonsAPI;
 const { getOrInitModifier, } = cardsUtil;
 const { CardCategory, UnitType } = commonTypes;
@@ -299,7 +300,8 @@ const hardLandingEvent: Events = {
         const modifier = unit.modifiers[HardLandingId];
         if (modifier) {
             const spawnLocation = { x: unit.x, y: unit.y } as Vec2;
-            const units = underworld.getUnitsWithinDistanceOfTarget(spawnLocation, 100, prediction).filter(u => u.id != unit.id);
+            const radius = 100;
+            const units = underworld.getUnitsWithinDistanceOfTarget(spawnLocation, radius, prediction).filter(u => u.id != unit.id);
             units.forEach(u => {
                 // Deal damage to units
                 takeDamage({
@@ -309,6 +311,10 @@ const hardLandingEvent: Events = {
                     fromVec2: unit,
                 }, underworld, prediction);
             });
+            if(!prediction){
+                ParticleCollection.makeParticleExplosion(spawnLocation, radius / 140, 0xaaaaaa, 0xaaaaaa, prediction);
+            }
+            PlanningView.runPredictions(underworld);
 
             units.forEach(u => {
                 // Push units away from exploding location
