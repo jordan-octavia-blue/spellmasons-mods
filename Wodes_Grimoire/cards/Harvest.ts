@@ -7,6 +7,7 @@ const {
     cards,
     Particles,
     FloatingText,
+    EffectsHeal,
 } = globalThis.SpellmasonsAPI;
 
 const { refundLastSpell } = cards;
@@ -50,7 +51,7 @@ const spell: Spell = {
                     //Does spell effect for client
                     Unit.cleanup(unit);
                 }
-                state.casterUnit.mana += totalManaHarvested;
+                EffectsHeal.healManaUnit(state.casterUnit, totalManaHarvested, undefined, underworld, prediction);
             });
             //Refund if no targets
             if (targets.length == 0 && !totalManaHarvested) {
