@@ -6,6 +6,7 @@ import Renes_Gimmicks from './Renes_gimmicks/Index';
 import DaiNekoIchis_TomeOfSpells from './DaiNekoIchis_TomeOfSpells/Index';
 import BogiacsSpells from './Bogiacs_Spells/BogiacsSpells';
 import Doom_Scroll from './The_Doom_Scroll/Doom_Scroll';
+import Runic_Alphabet from './RunicAlphabet/RunicAlphabet';
 import DoriososMinions from './Doriosos_minions/doriosos_minions';
 import WeedysWorlds from './WeedysWorlds/WeedysWorlds';
 
@@ -16,6 +17,7 @@ const mods: commonTypes.Mod[] = [
     DaiNekoIchis_TomeOfSpells,
     BogiacsSpells,
     Doom_Scroll,
+    Runic_Alphabet,
     DoriososMinions,
     WeedysWorlds,
 ];
