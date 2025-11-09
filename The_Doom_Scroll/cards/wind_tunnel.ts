@@ -30,7 +30,7 @@ import type Underworld from '../../types/Underworld';
 
 
 export const windTunnelId = 'Wind Tunnel';
-const defaultPushDistance =140;
+const defaultPushDistance = 140;
 const range = 250;
 const baseWidth = 20;
 const timeoutMsAnimation = 2000;
@@ -49,39 +49,40 @@ const spell: Spell = {
     allowNonUnitTarget: true,
     effect: async (state, card, quantity, underworld, prediction, outOfRange) => {
       // +50% depth per radius boost
-            const adjustedRadiusBoost = quantity - 1 + state.aggregator.radiusBoost;
-            const depth = range * (1 + (0.5 * adjustedRadiusBoost));
-            // Width doubles up to 4 casts, capping at 8x multiplier: 1 > 2 > 4 > 8
-            const width = baseWidth * Math.pow(2, Math.min(quantity, 4)) / 2;
+      const adjustedRadiusBoost = quantity - 1 + state.aggregator.radiusBoost;
+      const depth = range * (1 + (0.5 * adjustedRadiusBoost));
+      // Width doubles up to 4 casts, capping at 8x multiplier: 1 > 2 > 4 > 8
+      const width = baseWidth * Math.pow(2, Math.min(quantity, 2)) / 2;
 
-            // Note: This loop must NOT be a for..of and it must cache the length because it
-            // mutates state.targetedUnits as it iterates.  Otherwise it will continue to loop as it grows
-            const vector = normalizedVector(state.casterUnit, state.castLocation).vector || { x: 0, y: 0 };
-            const animateColumns = [];
-            const location = state.casterUnit;
-            const targetingColumn = getColumnPoints(location, vector, width, depth);
-            // Draw visual circle for prediction
-            if (prediction) {
-                drawUIPolyPrediction(targetingColumn, 0xffffff);
-            } else {
-                animateColumns.push({ castLocation: location, vector, width, depth });
-            }
-            const withinColumn = underworld.getPotentialTargets(
-                prediction
-            ).filter(t => {
-                return isVec2InsidePolygon(t, targetingColumn);
-            });
-            if (!prediction) {
-                await animate(animateColumns, underworld, prediction);
-            }
-            let promises = [];
-            playDefaultSpellSFX(card, prediction);
-            for (let entity of withinColumn) {
-                if (entity != state.casterUnit) {
-                promises.push(forcePushToDestination(entity, moveAlongVector(entity, vector, defaultPushDistance * quantity), 1 + adjustedRadiusBoost, underworld, prediction, state.casterUnit));
-            }}
-            await Promise.all(promises);
-            return state;
+      // Note: This loop must NOT be a for..of and it must cache the length because it
+      // mutates state.targetedUnits as it iterates.  Otherwise it will continue to loop as it grows
+      const vector = normalizedVector(state.casterUnit, state.castLocation).vector || { x: 0, y: 0 };
+      const animateColumns = [];
+      const location = state.casterUnit;
+      const targetingColumn = getColumnPoints(location, vector, width, depth);
+      // Draw visual circle for prediction
+      if (prediction) {
+        drawUIPolyPrediction(targetingColumn, 0xffffff);
+      } else {
+        animateColumns.push({ castLocation: location, vector, width, depth });
+      }
+      const withinColumn = underworld.getPotentialTargets(
+        prediction
+      ).filter(t => {
+        return isVec2InsidePolygon(t, targetingColumn);
+      });
+      if (!prediction) {
+        await animate(animateColumns, underworld, prediction);
+      }
+      let promises = [];
+      playDefaultSpellSFX(card, prediction);
+      for (let entity of withinColumn) {
+        if (entity != state.casterUnit) {
+          promises.push(forcePushToDestination(entity, moveAlongVector(entity, vector, defaultPushDistance * quantity), 1 + adjustedRadiusBoost, underworld, prediction, state.casterUnit));
+        }
+      }
+      await Promise.all(promises);
+      return state;
     },
   },
 };
