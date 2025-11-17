@@ -6,7 +6,7 @@ import { IPickup } from './entity/Pickup';
 import { ForceMoveProjectile } from './jmath/moveWithCollision';
 import { CardCost } from './cards/cardUtils';
 import type { IPlayer } from './entity/Player';
-import { ICard } from './cards';
+import { EffectState, ICard } from './cards';
 import { Faction } from './types/commonTypes';
 export type onDealDamage = {
     (damageDealer: IUnit, amount: number, underworld: Underworld, prediction: boolean, damageReciever?: IUnit): number;
@@ -19,6 +19,9 @@ export type onCostCalculation = {
 };
 export type onForceMove = {
     (pushedObject: HasSpace, velocity: Vec2, sourceUnit?: IUnit): Vec2;
+};
+export type onCast = {
+    (effectState: EffectState, underworld: Underworld, prediction: boolean): void;
 };
 export type onTakeDamage = {
     (unit: IUnit, amount: number, underworld: Underworld, prediction: boolean, damageDealer?: IUnit): number;
@@ -120,6 +123,9 @@ declare const _default: {
     };
     onSpawnSource: {
         [name: string]: onSpawn;
+    };
+    onCastSource: {
+        [name: string]: onCast;
     };
 };
 export default _default;

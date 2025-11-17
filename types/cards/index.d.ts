@@ -2,7 +2,7 @@ import type * as Player from '../entity/Player';
 import * as Unit from '../entity/Unit';
 import * as Pickup from '../entity/Pickup';
 import type { Vec2 } from '../jmath/Vec';
-import { onDealDamage, onTakeDamage, onLiquid, onKill, onTooltip, onDeath, onMove, onAgro, onTurnStart, onTurnEnd, onDrawSelected, onProjectileCollision, onTeleport, onSpawn, onPickup, onFullTurnCycle, onCostCalculation, onForceMove } from '../Events';
+import { onDealDamage, onTakeDamage, onLiquid, onKill, onTooltip, onDeath, onMove, onAgro, onTurnStart, onTurnEnd, onDrawSelected, onProjectileCollision, onTeleport, onSpawn, onPickup, onFullTurnCycle, onCostCalculation, onForceMove, onCast } from '../Events';
 import { Subsprite } from '../Subsprites';
 import { CardCost } from './cardUtils';
 import Underworld from '../Underworld';
@@ -50,6 +50,7 @@ export interface Events {
     onProjectileCollision?: onProjectileCollision;
     onCostCalculation?: onCostCalculation;
     onForceMove?: onForceMove;
+    onCast?: onCast;
 }
 export interface Spell {
     card: ICard;
@@ -125,6 +126,6 @@ export declare function addTarget(target: any, effectState: EffectState, underwo
 export declare function addUnitTarget(unit: Unit.IUnit, effectState: EffectState, prediction: boolean): void;
 export declare function addPickupTarget(pickup: Pickup.IPickup, effectState: EffectState): void;
 export declare function getMaxRuneQuantity(modifier: Modifiers): number;
-export type MODIFIER_STAGE = 'Soul Shard' | 'Soul Bind' | 'Amount Multiplier' | 'Amount Flat' | 'Amount Override' | 'Blood Curse' | 'Reactive Effects' | 'Unstaged Events';
+export type MODIFIER_STAGE = 'Soul Shard' | 'Soul Bind' | 'Pre' | 'Amount Multiplier' | 'Amount Flat' | 'Amount Override' | 'Blood Curse' | 'Reactive Effects' | 'Unstaged Events';
 export declare const MODIFIER_ORDER: MODIFIER_STAGE[];
 export declare function eventsSorter(lookup: typeof allModifiers): (eventA: string, eventB: string) => number;

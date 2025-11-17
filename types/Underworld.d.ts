@@ -295,7 +295,7 @@ export interface LevelData {
         isMiniboss: boolean;
     }[];
 }
-interface CastCardsArgs {
+export interface CastCardsArgs {
     casterCardUsage: Player.CardUsage;
     casterUnit: Unit.IUnit;
     casterPositionAtTimeOfCast: Vec2;

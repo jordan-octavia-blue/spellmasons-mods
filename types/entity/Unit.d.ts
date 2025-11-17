@@ -54,6 +54,7 @@ export type IUnit = HasSpace & HasLife & HasMana & HasStamina & {
         [key: string]: any;
     };
     damage: number;
+    damageAsPercent?: boolean;
     bloodColor: number;
     manaCostToCast: number;
     manaPerTurn: number;
