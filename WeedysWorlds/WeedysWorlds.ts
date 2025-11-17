@@ -6,7 +6,7 @@ const mod: Mod = {
     modName: 'Weedy\'s Worlds',
     author: 'Weedybird',
     description: 'New maps? New maps!',
-    screenshot: 'spellmasons-mods/WeedysWorlds/Weedys Worlds.png',
+    screenshot: 'spellmasons-mods/WeedysWorlds/Weedys-Worlds.png',
     maps: [
         {
          "data":[15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
