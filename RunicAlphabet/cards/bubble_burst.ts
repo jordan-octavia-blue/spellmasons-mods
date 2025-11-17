@@ -52,7 +52,6 @@ const spell: Spell = {
             // Note: This loop must NOT be a for..of and it must cache the length because it
             // mutates state.targetedUnits as it iterates.  Otherwise it will continue to loop as it grows
             let targets: Vec2[] = getCurrentTargets(state);
-            targets = defaultTargetsForAllowNonUnitTargetTargetingSpell(targets, state.castLocation, card);
             const length = targets.length;
             const animateCircles = [];
             let bubbleBoys: IUnit[] = [];
@@ -86,10 +85,8 @@ const spell: Spell = {
                     Unit.removeModifier(unit, SubmergeId, underworld);
                 }
                 Unit.addModifier(unit, SubmergeId, underworld, prediction);
-                Unit.removeModifier(unit, SubmergeId, underworld);
-                if (submerged) {
-                    // Re-add the submerged modifier if it was removed earlier
-                    Unit.addModifier(unit, SubmergeId, underworld, prediction);
+                if (!submerged) {
+                    Unit.removeModifier(unit, SubmergeId, underworld);
                 }
             }
             await animateTargetCircle(animateCircles, underworld, prediction);
