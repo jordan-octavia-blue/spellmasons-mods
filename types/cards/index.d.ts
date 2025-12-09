@@ -28,6 +28,7 @@ export interface Modifiers {
     keepBetweenLevels?: boolean;
     omitForWizardType?: WizardType[];
     isMalady?: boolean;
+    modName?: string;
 }
 export declare function calcluateModifierCostPerUpgrade(mod: Modifiers, underworld: Underworld, player?: Player.IPlayer): number;
 export interface Events {

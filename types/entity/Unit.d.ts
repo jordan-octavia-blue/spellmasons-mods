@@ -159,5 +159,6 @@ export declare function addEvent(unit: IUnit, eventId: string): void;
 export declare function countCharges(unit: IUnit): number;
 export declare function refillCharges(unit: IUnit, underworld: Underworld): void;
 export declare function drawCharges(unit: IUnit, underworld: Underworld, count?: number): void;
+export declare function changeDamageNonRelative(unit: IUnit, delta: number): void;
 export declare function getMaxCharges(unit: IUnit, underworld: Underworld): number;
 export {};
