@@ -196,6 +196,7 @@ const modifierHeavyHitter: Modifiers = {
     _costPerUpgrade: 150,
     quantityPerUpgrade: 1,
     maxUpgradeCount: 1,
+    omitForWizardType:['Deathmason'],
     add: (unit: IUnit, underworld: Underworld, prediction: boolean, quantity: number = 1) => {
         getOrInitModifier(unit, heavyHitterId, { isCurse: false, quantity, keepOnDeath: true }, () => {
             Unit.addEvent(unit, heavyHitterId);
@@ -527,6 +528,9 @@ const heavyHitterEvent: Events = {
                 cardCost.manaCost *= 2;
                 cardCost.staminaCost *= 2;
                 cardCost.healthCost *= 2;
+                if(cardCost.soulFragmentCost){
+                    cardCost.soulFragmentCost *= 2;
+                }
             }
             return cardCost;
         }
