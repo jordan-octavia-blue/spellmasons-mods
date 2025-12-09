@@ -78,7 +78,7 @@ const spell: Spell = {
       playDefaultSpellSFX(card, prediction);
       for (let entity of withinColumn) {
         if (entity != state.casterUnit) {
-          promises.push(forcePushToDestination(entity, moveAlongVector(entity, vector, defaultPushDistance * quantity), 1 + adjustedRadiusBoost, underworld, prediction, state.casterUnit));
+          promises.push(forcePushToDestination(entity, moveAlongVector(entity, vector, defaultPushDistance * quantity), 1, underworld, prediction, state.casterUnit));
         }
       }
       await Promise.all(promises);
