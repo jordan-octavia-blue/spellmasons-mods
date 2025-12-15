@@ -11,9 +11,9 @@ import target_around from './cards/target_around';
 import target_random from './cards/target_random';
 const mod: Mod = {
     modName: 'Mana Evolution',
-    author: 'Charlie Heck',
+    author: 'Bug Jones',
     description: "Adds new upgrades to existing spells that change their playstyles and uses in interesting ways.",
-    screenshot: 'TODO',
+    screenshot: 'spellmasons-mods/Mana Evolution/images/growth.png',
     spells: [
         chaosSummon,
         unstable,
