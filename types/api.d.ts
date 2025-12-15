@@ -53,10 +53,12 @@ import * as Events from './Events';
 import { forcePushTowards, forcePushAwayFrom, forcePushToDestination, forcePushDelta } from './effects/force_move';
 import * as EffectsHeal from './effects/heal';
 import * as explode from "./effects/explode";
+import { teleport } from "./effects/teleport";
 import * as commonTypes from './types/commonTypes';
 import * as particleEmitter from 'jdoleary-fork-pixi-particle-emitter';
 import * as Arrow from "./cards/arrow";
 import * as Purify from "./cards/purify";
+import * as Clone from './cards/clone';
 declare const SpellmasonsAPI: {
     Angle: typeof Angle;
     AnimationCombos: typeof AnimationCombos;
@@ -66,6 +68,7 @@ declare const SpellmasonsAPI: {
     cardsUtil: typeof cardsUtil;
     CardUI: typeof CardUI;
     cardUtils: typeof cardUtils;
+    Clone: typeof Clone;
     colors: typeof colors;
     colorUtil: typeof colorUtil;
     commonTypes: typeof commonTypes;
@@ -114,6 +117,7 @@ declare const SpellmasonsAPI: {
     Rect: typeof Rect;
     storage: typeof storage;
     Subsprites: typeof Subsprites;
+    teleport: typeof teleport;
     Type: typeof Type;
     Underworld: typeof Underworld;
     Unit: typeof Unit;
