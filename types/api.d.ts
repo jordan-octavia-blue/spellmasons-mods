@@ -59,6 +59,7 @@ import * as particleEmitter from 'jdoleary-fork-pixi-particle-emitter';
 import * as Arrow from "./cards/arrow";
 import * as Purify from "./cards/purify";
 import * as Clone from './cards/clone';
+import * as TargetCircle from './cards/target_circle';
 declare const SpellmasonsAPI: {
     Angle: typeof Angle;
     AnimationCombos: typeof AnimationCombos;
@@ -117,6 +118,7 @@ declare const SpellmasonsAPI: {
     Rect: typeof Rect;
     storage: typeof storage;
     Subsprites: typeof Subsprites;
+    TargetCircle: typeof TargetCircle;
     teleport: typeof teleport;
     Type: typeof Type;
     Underworld: typeof Underworld;
