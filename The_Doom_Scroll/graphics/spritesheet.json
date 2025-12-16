@@ -1,8 +1,16 @@
 {"frames": {
 
-"altar.png":
+"altar_0.png":
 {
-	"frame": {"x":199,"y":1,"w":42,"h":81},
+	"frame": {"x":199,"y":84,"w":42,"h":81},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":8,"w":42,"h":81},
+	"sourceSize": {"w":64,"h":89}
+},
+"altar_1.png":
+{
+	"frame": {"x":199,"y":84,"w":42,"h":81},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":9,"y":8,"w":42,"h":81},
@@ -10,7 +18,7 @@
 },
 "altarDeath_1.png":
 {
-	"frame": {"x":199,"y":84,"w":42,"h":81},
+	"frame": {"x":199,"y":1,"w":42,"h":81},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":9,"y":8,"w":42,"h":81},
@@ -48,9 +56,17 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
 	"sourceSize": {"w":64,"h":64}
 },
-"pillar.png":
+"pillar_0.png":
 {
-	"frame": {"x":199,"y":167,"w":42,"h":74},
+	"frame": {"x":199,"y":243,"w":42,"h":74},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":15,"w":42,"h":74},
+	"sourceSize": {"w":64,"h":89}
+},
+"pillar_1.png":
+{
+	"frame": {"x":199,"y":243,"w":42,"h":74},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":9,"y":15,"w":42,"h":74},
@@ -58,7 +74,7 @@
 },
 "pillarDeath_1.png":
 {
-	"frame": {"x":199,"y":243,"w":42,"h":74},
+	"frame": {"x":199,"y":167,"w":42,"h":74},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":9,"y":15,"w":42,"h":74},
@@ -193,7 +209,9 @@
 	"sourceSize": {"w":64,"h":64}
 }},
 "animations": {
+	"altar": ["altar_0.png","altar_1.png"],
 	"altarDeath": ["altarDeath_1.png","altarDeath_2.png","altarDeath_3.png","altarDeath_4.png"],
+	"pillar": ["pillar_0.png","pillar_1.png"],
 	"pillarDeath": ["pillarDeath_1.png","pillarDeath_2.png","pillarDeath_3.png","pillarDeath_4.png"]
 },
 "meta": {
@@ -203,6 +221,6 @@
 	"format": "RGBA8888",
 	"size": {"w":242,"h":396},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:76cd658f5d2f760316e8e96906e581cb:326e2bdde0f2ebba93cb215707be1364:729adc6043343cfda41c447ce8f464d6$"
+	"smartupdate": "$TexturePacker:SmartUpdate:279236c8b8206731d702984684fafbf6:eaea847def1331576a52b86db801eabf:729adc6043343cfda41c447ce8f464d6$"
 }
 }

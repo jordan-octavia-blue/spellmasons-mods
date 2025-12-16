@@ -213,16 +213,18 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">altar.png</key>
             <key type="filename">altarDeath_1.png</key>
             <key type="filename">altarDeath_2.png</key>
             <key type="filename">altarDeath_3.png</key>
             <key type="filename">altarDeath_4.png</key>
-            <key type="filename">pillar.png</key>
+            <key type="filename">altar_0.png</key>
+            <key type="filename">altar_1.png</key>
             <key type="filename">pillarDeath_1.png</key>
             <key type="filename">pillarDeath_2.png</key>
             <key type="filename">pillarDeath_3.png</key>
             <key type="filename">pillarDeath_4.png</key>
+            <key type="filename">pillar_0.png</key>
+            <key type="filename">pillar_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -241,12 +243,10 @@
         <key>fileList</key>
         <array>
             <filename>Doom_Scroll.png</filename>
-            <filename>altar.png</filename>
             <filename>altarDeath_1.png</filename>
             <filename>altarDeath_2.png</filename>
             <filename>altarDeath_3.png</filename>
             <filename>altarDeath_4.png</filename>
-            <filename>pillar.png</filename>
             <filename>pillarDeath_1.png</filename>
             <filename>pillarDeath_2.png</filename>
             <filename>pillarDeath_3.png</filename>
@@ -264,6 +264,10 @@
             <filename>spellIconTargetStomp.png</filename>
             <filename>spellIconWind_Explosion.png</filename>
             <filename>spellIconWind_Tunnel.png</filename>
+            <filename>altar_0.png</filename>
+            <filename>altar_1.png</filename>
+            <filename>pillar_0.png</filename>
+            <filename>pillar_1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
