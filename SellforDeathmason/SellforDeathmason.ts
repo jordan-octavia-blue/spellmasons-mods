@@ -26,7 +26,7 @@ const spell: Spell = {
         replaces: [],
         category: CardCategory.Blessings,
         supportQuantity: false,
-        manaCost: 0,
+        manaCost: 10,
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.RARE],
@@ -36,12 +36,12 @@ const spell: Spell = {
         ignoreRange: true,
         animationPath: '',
         sfx: '',
-        omitForWizardType: ['Spellmason','Goru'],
+        omitForWizardType: ['Spellmason', 'Goru'],
         description: ['spell_sell'],
         frontload: true,
         effect: async (state, card, quantity, underworld, prediction) => {
             // Clear out the rest of the spell so it doesn't actually cast it
-            underworld 
+            underworld
             const sellIndex = state.cardIds.indexOf(sellCardId);
             if (sellIndex !== 0) {
                 FloatingText.default({ coords: state.castLocation, text: 'sell error' });
