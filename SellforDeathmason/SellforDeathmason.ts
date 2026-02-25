@@ -86,7 +86,9 @@ const spell: Spell = {
                 state.casterPlayer.disabledCards.push(...cardsToSell)
                 // Remove sold cards from toolbar (replaces with empty '')
                 state.casterPlayer.cardsInToolbar = state.casterPlayer.cardsInToolbar.map(cardId => cardsToSell.includes(cardId) ? '' : cardId);
-
+                //Makes sure sold cards are removed from inventory - GQ
+                const removeFromInventory = new Set(cardsToSell);
+                state.casterPlayer.inventory = state.casterPlayer.inventory.filter(item => !removeFromInventory.has(item));
                 // For the casting player only...
                 // Had to import the player def from the spellmason repo, hope that doesn't break anything -GQ
                 if (state.casterPlayer === globalThis.player) {
