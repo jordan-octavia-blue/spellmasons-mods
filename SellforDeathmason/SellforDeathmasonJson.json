@@ -1,0 +1,14 @@
+{
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "../../../public/spellmasons-mods/SellforDeathmason/SellforDeathmasonImage.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 118,
+			"h": 145
+		},
+		"scale": "1",
+		"smartupdate": "$TexturePacker:SmartUpdate:88c169ae0ba1d5f656f97e8a78f909c2:8b6b2ca3b6644cb7b1e4f1acd534f531:df18da0ae28a83f381f5f8955fd7655b$"
+	}
+}
