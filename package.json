@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/jdoleary/spellmasons-mods#readme",
   "devDependencies": {
+    "jdoleary-fork-pixi-particle-emitter": "^5.0.9",
     "typescript": "^4.9.5",
     "vite": "^4.1.3"
   }
