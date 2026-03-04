@@ -9,7 +9,7 @@ const {
     cardUtils,
     units,
 } = globalThis.SpellmasonsAPI;
-const { getUniqueSeedString, chooseOneOfSeeded, seedrandom } = rand;
+const { getUniqueSeedString, chooseOneOfSeeded, seedrandom, randInt } = rand;
 const { CardRarity, probabilityMap, CardCategory, Faction, UnitSubType, UnitType } = commonTypes;
 const { addWarningAtMouse } = PlanningView;
 const { playDefaultSpellSFX } = cardUtils;
@@ -17,7 +17,6 @@ const { skyBeam } = VisualEffects;
 const { allUnits } = units;
 const { addUnitTarget, refundLastSpell} = cards;
 import type { Spell } from '../../types/cards/index';
-import { randInt } from '../../types/jmath/rand';
 const id  = 'Capture Soul';
 const bossmasonUnitId = 'Deathmason',
     spellmasonUnitId = 'Spellmason',
