@@ -10,6 +10,7 @@ import Runic_Alphabet from './RunicAlphabet/RunicAlphabet';
 import DoriososMinions from './Doriosos_minions/doriosos_minions';
 import WeedysWorlds from './WeedysWorlds/WeedysWorlds';
 import Forcefield from './Forcefield/forcefield'
+import ManaEvolution from './Mana_Evolution/Mana_Evolution'
 
 const mods: commonTypes.Mod[] = [
     UndeadBlade,
@@ -21,7 +22,8 @@ const mods: commonTypes.Mod[] = [
     Runic_Alphabet,
     DoriososMinions,
     WeedysWorlds,
-    Forcefield
+    Forcefield,
+    ManaEvolution
 ];
 globalThis.mods = globalThis.mods !== undefined ? [...globalThis.mods, ...mods] : mods;
 console.log('Mods: Add mods', globalThis.mods);

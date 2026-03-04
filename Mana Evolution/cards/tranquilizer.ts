@@ -14,7 +14,8 @@ const {
     JImage,
     moveWithCollision,
     Vec,
-    
+    FloatingText,
+
 } = globalThis.SpellmasonsAPI;
 const { getUniqueSeedString, chooseOneOfSeeded, seedrandom, randFloat } = rand;
 const { CardRarity, probabilityMap, CardCategory, Faction, UnitSubType, UnitType } = commonTypes;
@@ -162,6 +163,9 @@ const spell: Spell = {
             const modifier = unit.modifiers[tranquilizerId];
             if (modifier) {
                 Unit.removeModifier(unit, tranquilizerId, underworld);
+                if (!prediction) {
+                    FloatingText.default({ coords: unit, text: 'Woke up!', prediction });
+                }
             }
             return amount;
         },
@@ -171,8 +175,15 @@ const spell: Spell = {
             const frozen = unit.modifiers[freezeCardId];
             if (modifier && !frozen) {
                 modifier.quantity--;
-                if (modifier.quantity == 0) {
+                if (modifier.quantity <= 0) {
                     Unit.removeModifier(unit, tranquilizerId, underworld);
+                    if (!prediction) {
+                        FloatingText.default({ coords: unit, text: 'Woke up!', prediction });
+                    }
+                } else {
+                    if (!prediction) {
+                        FloatingText.default({ coords: unit, text: `Sleeping... zzz`, prediction });
+                    }
                 }
             }
         }

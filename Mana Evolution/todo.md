@@ -1,0 +1,3 @@
+- Chaos summon shows invalid when its not
+- also uses wrong copy
+- Add floating text to tranquilizer so on each turn it says their assleep and reveal when they wake either from damage or from turns passing

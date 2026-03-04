@@ -179,7 +179,8 @@ function remove(unit: IUnit, underworld: Underworld) {
     unit.damage -= unit.modifiers[cardId].quantity * attackMultiplier;
     unit.damage = Math.max(unit.damage, 0);
     for (let follower of underworld.particleFollowers) {
-        if (follower.emitter.name === BURNING_RAGE_PARTICLE_EMITTER_NAME && follower.target == unit) {
+        // @ts-ignore
+        if (follower?.emitter?.name === BURNING_RAGE_PARTICLE_EMITTER_NAME && follower.target == unit) {
             // Remove emitter
             ParticleCollection.stopAndDestroyForeverEmitter(follower.emitter);
             break;

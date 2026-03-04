@@ -18,7 +18,7 @@ const {
     
     
 } = globalThis.SpellmasonsAPI;
-import particles from "jdoleary-fork-pixi-particle-emitter"
+import * as particles from 'jdoleary-fork-pixi-particle-emitter'
 import type Underworld from '../types/Underworld';
 import type { Vec2 } from '../types/jmath/Vec';
 import type { HasSpace } from '../types/entity/Type';
@@ -28,7 +28,7 @@ import type { Polygon2 } from '../types/jmath/Polygon2';
 import { Mod } from '../types/types/commonTypes';
 const { invert } = Vec;
 const { simpleEmitter, createParticleTexture, containerParticles } = Particles;
-const { stopAndDestroyForeverEmitter } = particleEmitter;
+const { stopAndDestroyForeverEmitter } = ParticleCollection;
 const { getOrInitModifier } = cardsUtil;
 const { CardRarity, probabilityMap, CardCategory } = commonTypes;
 const { toPolygon2LineSegments } = Polygon2;
@@ -62,7 +62,6 @@ const spell: Spell = {
             // Note: This loop must NOT be a for..of and it must cache the length because it
             // mutates state.targetedUnits as it iterates.  Otherwise it will continue to loop as it grows
             let targets: Vec2[] = [state.castLocation];
-            targets = defaultTargetsForAllowNonUnitTargetTargetingSpell(targets, state.castLocation, card);
             const length = 1;
             const vector = normalizedVector(state.casterUnit, state.castLocation).vector || { x: 0, y: 0 };
 
@@ -90,15 +89,14 @@ const spell: Spell = {
                     particleStart = moveAlongVector(particleStart, invert(vector), -12);
 
                     if (containerParticles && !prediction && targetingColumn[0]) {
-                        const emitters = particlePoints.map(point => simpleEmitter(particleStart, generateConfig(point, state.castLocation), () => { }, containerParticles));
-                        emitters.forEach(e => (containerParticles && e) ? underworld.particleFollowers.push({ displayObject: containerParticles, emitter: e, target: particleStart }) : console.log('no container particles'));
+                        spawnParticles(particlePoints, particleStart, state.castLocation, underworld);
                     }
                     if (prediction) {
                         drawUIPolyPrediction(wallPoly, 0xffffff);
                     } else {
                         underworld.pathingLineSegments.push(...toPolygon2LineSegments(wallPoly));
                         underworld.pathingPolygons.push(wallPoly);
-                        Unit.addModifier(state.casterUnit, id, underworld, prediction, 1, { points: targetingColumn, particleStart })
+                        Unit.addModifier(state.casterUnit, id, underworld, prediction, 1, { points: targetingColumn, particleStart, particlePoints, castLocation: state.castLocation })
                         for (let lineSeg of lineSegs) {
                             if (lineSeg) {
                                 underworld.walls.push(lineSeg);
@@ -124,28 +122,50 @@ const spell: Spell = {
             }
         },
         onTurnStart: async (unit: IUnit, underworld: Underworld, prediction: boolean) => {
-            if (underworld.lastLevelCreated && !prediction) {
-                console.log('Found existing wall from previous cast, will replace it');
-                underworld.cacheWalls(underworld.lastLevelCreated?.obstacles, underworld.lastLevelCreated?.imageOnlyTiles.filter(x => x.image == ''));
-                Unit.removeModifier(unit, id, underworld);
+            const modifier = unit.modifiers[id];
+            if (underworld.lastLevelCreated && !prediction && modifier) {
+                if (modifier.enemyTurnPassed) {
+                    console.log('Forcefield expired after lasting through enemy turn');
+                    cleanupParticles(modifier, underworld);
+                    underworld.cacheWalls(underworld.lastLevelCreated?.obstacles, underworld.lastLevelCreated?.imageOnlyTiles.filter(x => x.image == ''));
+                    Unit.removeModifier(unit, id, underworld);
+                } else {
+                    // Wall persists through enemy turn - respawn particles since the engine cleans them up between turns
+                    if (containerParticles && modifier.particlePoints && modifier.particleStart && modifier.castLocation) {
+                        spawnParticles(modifier.particlePoints, modifier.particleStart, modifier.castLocation, underworld);
+                    }
+                    modifier.enemyTurnPassed = true;
+                }
             }
         },
     }
 };
+function spawnParticles(particlePoints: Vec2[], particleStart: Vec2, castLocation: Vec2, underworld: Underworld) {
+    if (!containerParticles) return;
+    const emitters = particlePoints.map(point => simpleEmitter(particleStart, generateConfig(point, castLocation), () => { }, containerParticles));
+    emitters.forEach(e => (containerParticles && e) ? underworld.particleFollowers.push({ displayObject: containerParticles, emitter: e, target: particleStart }) : undefined);
+}
+function cleanupParticles(modifier: any, underworld: Underworld) {
+    if (underworld.particleFollowers && modifier.particleStart) {
+        underworld.particleFollowers.forEach(f => { if (f.target == modifier.particleStart) stopAndDestroyForeverEmitter(f.emitter); });
+    }
+}
 function add(unit: IUnit, underworld: Underworld, prediction: boolean, quantity: number = 1, extra?: { [key: string]: any }) {
     const modifier = getOrInitModifier(unit, id, { isCurse: false, quantity: 1 }, () => {
         Unit.addEvent(unit, id);
     });
-    if (extra && extra.points && extra.particleStart) {
-        modifier.points = extra.points;
-        modifier.particleStart = extra.particleStart;
+    if (extra) {
+        if (extra.points) modifier.points = extra.points;
+        if (extra.particleStart) modifier.particleStart = extra.particleStart;
+        if (extra.particlePoints) modifier.particlePoints = extra.particlePoints;
+        if (extra.castLocation) modifier.castLocation = extra.castLocation;
     }
 }
 function remove(unit: IUnit, underworld: Underworld) {
     const modifier = unit.modifiers[id];
-    if (underworld.lastLevelCreated && underworld.particleFollowers && modifier) {
+    if (underworld.lastLevelCreated && modifier) {
+        cleanupParticles(modifier, underworld);
         underworld.cacheWalls(underworld.lastLevelCreated?.obstacles, underworld.lastLevelCreated?.imageOnlyTiles.filter(x => x.image == ''));
-        underworld.particleFollowers.forEach(f => { if (f.target == modifier.particleStart) stopAndDestroyForeverEmitter(f.emitter); });
     }
 }
 export function getColumnPoints(castLocation: Vec2, vector: Vec2, width: number, depth: number): Vec2[] {
