@@ -15,7 +15,7 @@ const {
     cards,
     FloatingText,
     config,
-    CardUI
+    CardUI,
 } = globalThis.SpellmasonsAPI;
 
 const Cards = cards
@@ -41,7 +41,6 @@ const spell: Spell = {
         frontload: true,
         effect: async (state, card, quantity, underworld, prediction) => {
             // Clear out the rest of the spell so it doesn't actually cast it
-            underworld
             const sellIndex = state.cardIds.indexOf(sellCardId);
             if (sellIndex !== 0) {
                 FloatingText.default({ coords: state.castLocation, text: 'sell error' });
