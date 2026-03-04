@@ -1,11 +1,7 @@
 
 const {
-    units,
     Unit,
     Vec,
-    math,
-    cards,
-    cardUtils,
     cardsUtil,
     moveWithCollision,
     Polygon2,
@@ -14,18 +10,15 @@ const {
     colors,
     commonTypes,
     PlanningView,
-    particleEmitter,
-    
-    
+    lineSegment,
 } = globalThis.SpellmasonsAPI;
 import * as particles from 'jdoleary-fork-pixi-particle-emitter'
 import type Underworld from '../types/Underworld';
 import type { Vec2 } from '../types/jmath/Vec';
-import type { HasSpace } from '../types/entity/Type';
 import type { IUnit } from '../types/entity/Unit';
-import type { EffectState, Spell } from '../types/cards';
-import type { Polygon2 } from '../types/jmath/Polygon2';
-import { Mod } from '../types/types/commonTypes';
+import type { Spell } from '../types/cards';
+import type { Mod } from '../types/types/commonTypes';
+import type { LineSegment as LineSegmentType } from '../types/jmath/lineSegment';
 const { invert } = Vec;
 const { simpleEmitter, createParticleTexture, containerParticles } = Particles;
 const { stopAndDestroyForeverEmitter } = ParticleCollection;
@@ -33,8 +26,8 @@ const { getOrInitModifier } = cardsUtil;
 const { CardRarity, probabilityMap, CardCategory } = commonTypes;
 const { toPolygon2LineSegments } = Polygon2;
 const { drawUIPoly, drawUIPolyPrediction } = PlanningView;
-const { defaultTargetsForAllowNonUnitTargetTargetingSpell } = cards;
 const { moveAlongVector, normalizedVector } = moveWithCollision;
+const { lineSegmentIntersection, isCollinearAndOverlapping } = lineSegment;
 
 const id = 'Forcefield';
 const range = 20;
@@ -54,57 +47,53 @@ const spell: Spell = {
         description: 'Conjures a magical force wall that blocks movement and projectiles. Walls disappear after a turn or after summoning another wall. Stacks up to 3 times',
         allowNonUnitTarget: true,
         effect: async (state, card, quantity, underworld, prediction, outOfRange) => {
-            // +50% depth per radius boost
-            const adjustedRadiusBoost = quantity - 1 + state.aggregator.radiusBoost;
             const depth = range;
             // Width doubles up to 4 casts, capping at 8x multiplier: 1 > 2 > 4 > 8
             const width = baseWidth * Math.pow(2, Math.min(quantity, 3)) / 2;
-            // Note: This loop must NOT be a for..of and it must cache the length because it
-            // mutates state.targetedUnits as it iterates.  Otherwise it will continue to loop as it grows
-            let targets: Vec2[] = [state.castLocation];
-            const length = 1;
+            const target: Vec2 = state.castLocation;
             const vector = normalizedVector(state.casterUnit, state.castLocation).vector || { x: 0, y: 0 };
 
-            //This resets the stage back to before any walls were created
+            // Reset walls from a previous forcefield cast
             if (underworld.lastLevelCreated && !prediction) {
-                console.log('Found existing wall from previous cast, will replace it');
-                underworld.cacheWalls(underworld.lastLevelCreated?.obstacles, underworld.lastLevelCreated?.imageOnlyTiles.filter(x => x.image == ''));
                 Unit.removeModifier(state.casterUnit, id, underworld);
-
             }
-            for (let i = 0; i < length; i++) {
-                const target = targets[i];
-                if (!target) {
-                    continue;
-                }
-                const targetingColumn = getColumnPoints(target, vector, width, depth);
-                const particlePoints = getParticlePoints(target, vector, depth, width);
-                // Draw visual line for prediction of the walls
-                if (underworld.lastLevelCreated && targetingColumn && targetingColumn[0] && targetingColumn[1] && targetingColumn[2] && targetingColumn[3]) {
-                    //first, make the line segments for the 4 sides
-                    const lineSegs = [{ p1: targetingColumn[0], p2: targetingColumn[1] }, { p1: targetingColumn[2], p2: targetingColumn[3] }, { p1: targetingColumn[0], p2: targetingColumn[3] }, { p1: targetingColumn[1], p2: targetingColumn[2] }];
-                    //convert the line segments into a Polygon2
-                    const wallPoly: Polygon2 = [targetingColumn[0], targetingColumn[1], targetingColumn[2], targetingColumn[3]];
-                    let particleStart = moveAlongVector(targetingColumn[2], vector, depth * (Math.pow(2, Math.min(quantity, 3)) - 1) / 2);
-                    particleStart = moveAlongVector(particleStart, invert(vector), -12);
 
-                    if (containerParticles && !prediction && targetingColumn[0]) {
-                        spawnParticles(particlePoints, particleStart, state.castLocation, underworld);
-                    }
+            const targetingColumn = getColumnPoints(target, vector, width, depth);
+            const particlePoints = getParticlePoints(target, vector, depth, width);
+
+            if (underworld.lastLevelCreated && targetingColumn[0] && targetingColumn[1] && targetingColumn[2] && targetingColumn[3]) {
+                const lineSegs: LineSegmentType[] = [
+                    { p1: targetingColumn[0], p2: targetingColumn[1] },
+                    { p1: targetingColumn[2], p2: targetingColumn[3] },
+                    { p1: targetingColumn[0], p2: targetingColumn[3] },
+                    { p1: targetingColumn[1], p2: targetingColumn[2] },
+                ];
+                const wallPoly: Vec2[] = [targetingColumn[0], targetingColumn[1], targetingColumn[2], targetingColumn[3]];
+
+                // Prevent placing walls that overlap existing walls (which can trap the caster)
+                if (wouldOverlapExistingWalls(lineSegs, underworld.walls)) {
                     if (prediction) {
-                        drawUIPolyPrediction(wallPoly, 0xffffff);
-                    } else {
-                        underworld.pathingLineSegments.push(...toPolygon2LineSegments(wallPoly));
-                        underworld.pathingPolygons.push(wallPoly);
-                        Unit.addModifier(state.casterUnit, id, underworld, prediction, 1, { points: targetingColumn, particleStart, particlePoints, castLocation: state.castLocation })
-                        for (let lineSeg of lineSegs) {
-                            if (lineSeg) {
-                                underworld.walls.push(lineSeg);
-                            }
-                        }
+                        drawUIPolyPrediction(wallPoly, 0xff0000);
                     }
+                    return state;
                 }
 
+                let particleStart = moveAlongVector(targetingColumn[2], vector, depth * (Math.pow(2, Math.min(quantity, 3)) - 1) / 2);
+                particleStart = moveAlongVector(particleStart, invert(vector), -12);
+
+                if (containerParticles && !prediction && targetingColumn[0]) {
+                    spawnParticles(particlePoints, particleStart, state.castLocation, underworld);
+                }
+                if (prediction) {
+                    drawUIPolyPrediction(wallPoly, 0xffffff);
+                } else {
+                    underworld.pathingLineSegments.push(...toPolygon2LineSegments(wallPoly));
+                    underworld.pathingPolygons.push(wallPoly);
+                    Unit.addModifier(state.casterUnit, id, underworld, prediction, 1, { points: targetingColumn, particleStart, particlePoints, castLocation: state.castLocation });
+                    for (const lineSeg of lineSegs) {
+                        underworld.walls.push(lineSeg);
+                    }
+                }
             }
 
             return state;
@@ -124,22 +113,21 @@ const spell: Spell = {
         onTurnStart: async (unit: IUnit, underworld: Underworld, prediction: boolean) => {
             const modifier = unit.modifiers[id];
             if (underworld.lastLevelCreated && !prediction && modifier) {
-                if (modifier.enemyTurnPassed) {
-                    console.log('Forcefield expired after lasting through enemy turn');
-                    cleanupParticles(modifier, underworld);
-                    underworld.cacheWalls(underworld.lastLevelCreated?.obstacles, underworld.lastLevelCreated?.imageOnlyTiles.filter(x => x.image == ''));
-                    Unit.removeModifier(unit, id, underworld);
-                } else {
-                    // Wall persists through enemy turn - respawn particles since the engine cleans them up between turns
-                    if (containerParticles && modifier.particlePoints && modifier.particleStart && modifier.castLocation) {
-                        spawnParticles(modifier.particlePoints, modifier.particleStart, modifier.castLocation, underworld);
-                    }
-                    modifier.enemyTurnPassed = true;
-                }
+                Unit.removeModifier(unit, id, underworld);
             }
         },
     }
 };
+function wouldOverlapExistingWalls(newSegments: LineSegmentType[], existingWalls: LineSegmentType[]): boolean {
+    for (const newSeg of newSegments) {
+        for (const wall of existingWalls) {
+            if (lineSegmentIntersection(newSeg, wall) || isCollinearAndOverlapping(newSeg, wall)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 function spawnParticles(particlePoints: Vec2[], particleStart: Vec2, castLocation: Vec2, underworld: Underworld) {
     if (!containerParticles) return;
     const emitters = particlePoints.map(point => simpleEmitter(particleStart, generateConfig(point, castLocation), () => { }, containerParticles));
@@ -236,7 +224,7 @@ function generateConfig(point: Vec2, castLocation: Vec2): any {
 }
 function getParticlePoints(castLocation: Vec2, vector: Vec2, width: number, depth: number): Vec2[] {
     const scaleMultiplier = 1.2;
-    let points: Vec2[] = [];
+    const points: Vec2[] = [];
     const p1 = Vec.add(moveAlongVector(castLocation, invert(vector), -width), moveAlongVector(castLocation, vector, depth / 2));
     points.push(p1);
     let lastPoint = p1;
@@ -246,7 +234,6 @@ function getParticlePoints(castLocation: Vec2, vector: Vec2, width: number, dept
         lastPoint = p;
     }
     return points;
-
 }
 const mod: Mod = {
     modName: 'Forcefield',
