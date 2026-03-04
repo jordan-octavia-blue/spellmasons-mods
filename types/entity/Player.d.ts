@@ -1,6 +1,6 @@
 import * as Unit from './Unit';
 import * as Cards from '../cards';
-import { Faction, WizardType } from '../types/commonTypes';
+import { CardCategory, Faction, WizardType } from '../types/commonTypes';
 import Underworld from '../Underworld';
 export type IPlayerSerialized = Omit<IPlayer, "unit"> & {
     unit: {
@@ -58,6 +58,8 @@ export interface IPlayer {
     runePresentedIndex: number;
     gameVersion?: string;
     skippedCards: number;
+    wardenSlots: CardCategory[];
+    wardenCapturedSouls: string[];
 }
 export declare function inPortal(player: IPlayer): boolean;
 export declare function create(clientId: string, playerId: string, underworld: Underworld): IPlayer;
@@ -93,4 +95,5 @@ export declare function discardCards(player: IPlayer, underworld: Underworld, { 
 }): number;
 export declare function isDeathmason(player?: IPlayer): boolean;
 export declare function isGoru(player: IPlayer): boolean;
+export declare function isWarden(player?: IPlayer): boolean;
 export {};

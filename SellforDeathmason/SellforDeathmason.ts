@@ -2,9 +2,8 @@
 
 import type { Spell } from '../types/cards/index';
 //straight importing from commontypes, don't know why but importing from the api don't work - GQ
-import { CardRarity, probabilityMap, CardCategory } from '../types/types/commonTypes';
+import type { Mod } from '../types/types/commonTypes';
 //import { recalcPositionForCards, syncInventory } from '../types/graphics/ui/CardUI';
-import { Mod } from '../types/types/commonTypes';
 
 
 
@@ -16,7 +15,9 @@ const {
     FloatingText,
     config,
     CardUI,
+    commonTypes,
 } = globalThis.SpellmasonsAPI;
+const { CardRarity, probabilityMap, CardCategory } = commonTypes;
 
 const Cards = cards
 export const sellCardId = 'Sell For Deathmason';
@@ -30,7 +31,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.RARE],
-        thumbnail: 'spellmasons-mods/SellforDeathmason/SellforDeathmasonImage.png',
+        thumbnail: 'spellIconSell.png',
         allowNonUnitTarget: true,
         requiresFollowingCard: true,
         ignoreRange: true,
@@ -53,7 +54,7 @@ const spell: Spell = {
                     const card = Cards.allCards[cardId];
                     if (card && state.casterPlayer) {
                         //Using the defined value from config, will change in need be - GQ
-                        const highestSellVal = config.STAT_POINTS_PER_LEVEL * 2;
+                        const highestSellVal = underworld.rules.STAT_POINTS_PER_LEVEL * 2;
                         let sellValue: number;
                         // Summon cards (from summon_generic) have thumbnails starting with "spellIconSummon_"
                         // and soulFragmentCostOverride represents unit budget cost - use this for sell value
@@ -61,15 +62,16 @@ const spell: Spell = {
                         if (isSummonCard && !isNullOrUndef(card.soulFragmentCostOverride)) {
                             sellValue = Math.round(Math.min(card.soulFragmentCostOverride * 10, highestSellVal));
                         } else {
-                            const rarity: CardRarity = Object.entries(probabilityMap).find(([rarity, probability]) => probability === card.probability)?.[0] as CardRarity || CardRarity.COMMON;
-                            sellValue = Math.round({
+                            const rarity = Object.entries(probabilityMap).find(([rarity, probability]) => probability === card.probability)?.[0] || CardRarity.COMMON;
+                            const sellValues: Record<string, number> = {
                                 [CardRarity.COMMON]: highestSellVal / 8,
                                 [CardRarity.SPECIAL]: highestSellVal / 6,
                                 [CardRarity.UNCOMMON]: highestSellVal / 4,
                                 [CardRarity.RARE]: highestSellVal / 2,
                                 [CardRarity.FORBIDDEN]: highestSellVal,
                                 [CardRarity.RUNIC]: highestSellVal / 2,
-                            }[rarity]);
+                            };
+                            sellValue = Math.round(sellValues[rarity]);
                         }
                         state.casterPlayer.statPointsUnspent += sellValue;
                         return `${card.id}: ${sellValue} SP`;
