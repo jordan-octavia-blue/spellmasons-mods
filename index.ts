@@ -22,7 +22,7 @@ const mods: commonTypes.Mod[] = [
     Runic_Alphabet,
     DoriososMinions,
     WeedysWorlds,
-    Forcefield,
+    // Forcefield,
     ManaEvolution
 ];
 globalThis.mods = globalThis.mods !== undefined ? [...globalThis.mods, ...mods] : mods;
