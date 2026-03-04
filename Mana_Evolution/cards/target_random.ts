@@ -47,7 +47,11 @@ const spell: Spell = {
         effect: async (state, card, quantity, underworld, prediction, outOfRange) => {
             const targets = getCurrentTargets(state);
             //I figure that radius should be sufficient to encompass the whole map
-            const unTargetedUnits = underworld.getEntitiesWithinDistanceOfTarget(state.casterUnit, 1000000000000, prediction).filter(hs => !targets.includes(hs));
+            const unTargetedUnits = underworld.getPotentialTargets(prediction).filter(hs => isUnit(hs) && !targets.includes(hs));
+            if (unTargetedUnits.length === 0) {
+                refundLastSpell(state, prediction, 'No untargeted entities remaining, mana refunded');
+                return state;
+            }
             const seed = seedrandom(`${getUniqueSeedString(underworld, state.casterPlayer)}${state.casterUnit.mana}${state.casterUnit.manaMax}${state.casterUnit.stamina}${state.casterPlayer?.inventory}`);
             //add the random target
             addTarget(chooseOneOfSeeded(unTargetedUnits, seed), state, underworld, prediction);
