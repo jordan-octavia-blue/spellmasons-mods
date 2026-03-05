@@ -23,4 +23,6 @@ export declare function makeDeathmasonPortal(position: Vec2, prediction: boolean
 export declare function makeLightBeamParticles(position: Vec2): void;
 export declare function makePrimedCorpseParticles(follow: IUnit, underworld: Underworld, prediction: boolean, resolver?: () => void): void;
 export declare const emitterStopFrequency = 15000;
+export declare function makeFlameConeParticles(origin: Vec2, depth: number, startAngle: number, endAngle: number, prediction: boolean, resolver?: () => void): void;
+export declare function makeFireExplosion(position: Vec2, prediction: boolean, resolver?: () => void): void;
 export declare function stopAndDestroyForeverEmitter(emitter?: particles.Emitter): void;

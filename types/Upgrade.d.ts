@@ -16,7 +16,7 @@ export interface IUpgrade {
     probability: number;
     cost: CardCost;
 }
-export declare const filterUpgrades: (u: IUpgrade, player: Pick<IPlayer, "upgrades" | "inventory">, underworld: Pick<Underworld, "activeMods">) => boolean;
+export declare const filterUpgrades: (u: IUpgrade, player: Pick<IPlayer, "upgrades" | "inventory">, underworld: Pick<Underworld, "activeMods" | "rules">) => boolean;
 export declare function omitRerolledUpgrades(upgradeList: IUpgrade[]): IUpgrade[];
 export declare function generateUpgrades(player: IPlayer, numberOfUpgrades: number, underworld: Underworld): IUpgrade[];
 export declare function createUpgradeElement(upgrade: IUpgrade, player: IPlayer, underworld: Underworld): HTMLDivElement | undefined;

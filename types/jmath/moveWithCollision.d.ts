@@ -34,6 +34,7 @@ export type ForceMoveProjectile = ForceMove & {
     collideFnKey: string;
     state: EffectState;
     ignoreCollisionLifetime?: number | undefined;
+    emitter?: any;
 };
 export declare function isForceMoveProjectile(x: ForceMove): x is ForceMoveProjectile;
 interface ForceMoveProjectileArgs {

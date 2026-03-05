@@ -1,0 +1,11 @@
+import { CardCategory } from '../types/commonTypes';
+import { IUpgrade } from '../Upgrade';
+import { type ICard } from './index';
+import type { IPlayer } from '../entity/Player';
+import Underworld from '../Underworld';
+export declare function getCardsInCategory(category: CardCategory, player: IPlayer, underworld: Underworld): ICard[];
+export declare function resolveWardenSlot(player: IPlayer, slotIndex: number, underworld: Underworld): string | undefined;
+export declare function animateWardenShuffle(): void;
+export declare function resolveAllWardenSlots(player: IPlayer, underworld: Underworld): void;
+export declare const WARDEN_UPGRADE_ID_PREFIX = "Warden: ";
+export declare function getWardenCategoryUpgrades(): IUpgrade[];

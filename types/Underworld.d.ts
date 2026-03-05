@@ -8,6 +8,7 @@ import * as Cards from './cards';
 import * as Image from './graphics/Image';
 import { BloodParticle } from './graphics/PixiUtils';
 import { Faction, UnitSubType, GameMode, Pie } from './types/commonTypes';
+import { IGameRules } from './types/GameRules';
 import type { Vec2 } from "./jmath/Vec";
 import { prng, SeedrandomState } from './jmath/rand';
 import { LineSegment } from './jmath/lineSegment';
@@ -29,6 +30,7 @@ export declare const showUpgradesClassName = "showUpgrades";
 export default class Underworld {
     seed: string;
     gameMode?: GameMode;
+    rules: IGameRules;
     difficulty: number;
     localUnderworldNumber: number;
     overworld: Overworld;
