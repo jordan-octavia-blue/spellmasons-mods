@@ -131,8 +131,8 @@ const spell: Spell = {
                         sourceUnit.info.subtype,
                         {
                             ...sourceUnit.unitProps,
-                            healthMax: (sourceUnit.unitProps.healthMax || config.UNIT_BASE_HEALTH),
-                            health: (sourceUnit.unitProps.health || config.UNIT_BASE_HEALTH),
+                            healthMax: (sourceUnit.unitProps.healthMax || underworld.rules.UNIT_BASE_HEALTH),
+                            health: (sourceUnit.unitProps.health || underworld.rules.UNIT_BASE_HEALTH),
                             damage: (sourceUnit.unitProps.damage || 0),
                             strength: 1,
                             isMiniboss: randInt(0,3,seed) == 0
