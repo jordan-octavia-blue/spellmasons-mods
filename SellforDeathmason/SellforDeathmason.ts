@@ -53,6 +53,9 @@ const spell: Spell = {
                 const sellValues = cardsToSell.map(cardId => {
                     const card = Cards.allCards[cardId];
                     if (card && state.casterPlayer) {
+                        if(state.casterPlayer.unit.charges){
+                            state.casterPlayer.unit.charges[cardId] = 0;
+                        }
                         //Using the defined value from config, will change in need be - GQ
                         const highestSellVal = underworld.rules.STAT_POINTS_PER_LEVEL * 2;
                         let sellValue: number;
@@ -88,8 +91,6 @@ const spell: Spell = {
                 // Remove sold cards from toolbar (replaces with empty '')
                 state.casterPlayer.cardsInToolbar = state.casterPlayer.cardsInToolbar.map(cardId => cardsToSell.includes(cardId) ? '' : cardId);
                 //Makes sure sold cards are removed from inventory - GQ
-                const removeFromInventory = new Set(cardsToSell);
-                state.casterPlayer.inventory = state.casterPlayer.inventory.filter(item => !removeFromInventory.has(item));
                 // For the casting player only...
                 // Had to import the player def from the spellmason repo, hope that doesn't break anything -GQ
                 if (state.casterPlayer === globalThis.player) {
