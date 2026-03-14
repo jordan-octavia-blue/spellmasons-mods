@@ -26,7 +26,7 @@ const mod: Mod = {
         target_around,
         target_random
     ],
-    spritesheet: 'images/spritesheet.json',
+    spritesheet: 'spellmasons-mods/Mana_Evolution/images/spritesheet.json',
     sfx: {},
 };
 

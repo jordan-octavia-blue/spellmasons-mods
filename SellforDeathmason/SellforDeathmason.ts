@@ -118,6 +118,5 @@ const mod: Mod = {
     spells: [
         spell
     ],
-    spritesheet: 'SellforDeathmasonJson.json'
 };
 export default mod;
