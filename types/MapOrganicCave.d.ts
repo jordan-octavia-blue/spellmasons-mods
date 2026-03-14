@@ -21,6 +21,8 @@ export interface Limits {
 export declare function generateCave(params: CaveParams, biome: Biome, underworld: Underworld): {
     map: Map;
     limits: Limits;
+    isHandmade: boolean;
+    handmadeMapName: string | undefined;
 };
 export declare function convertBaseTilesToFinalTiles(map: Map): void;
 export declare function getLimits(points: Vec.Vec2[]): Limits;
