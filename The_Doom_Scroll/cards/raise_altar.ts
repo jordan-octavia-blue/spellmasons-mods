@@ -67,8 +67,8 @@ const spell: Spell = {
           sourceUnit.info.subtype,
           {
             ...sourceUnit.unitProps,
-            healthMax: (sourceUnit.unitProps.healthMax || underworld.rules.UNIT_BASE_HEALTH) * quantity,
-            health: (sourceUnit.unitProps.health || underworld.rules.UNIT_BASE_HEALTH) * quantity,
+            healthMax: (sourceUnit.unitProps.healthMax || config.UNIT_BASE_HEALTH) * quantity,
+            health: (sourceUnit.unitProps.health || config.UNIT_BASE_HEALTH) * quantity,
             damage: (sourceUnit.unitProps.damage || 0) * quantity,
             strength: quantity
           },
