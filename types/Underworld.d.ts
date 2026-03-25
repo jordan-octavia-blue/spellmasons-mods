@@ -19,6 +19,7 @@ import { DisplayObject, TilingSprite } from 'pixi.js';
 import { HasSpace } from './entity/Type';
 import { Overworld } from './Overworld';
 import { Emitter } from 'jdoleary-fork-pixi-particle-emitter';
+export declare function syncAdminMode(gameMode: GameMode | undefined): void;
 export declare enum turn_phase {
     Stalled = 0,
     PlayerTurns = 1,

@@ -25,7 +25,6 @@ export declare const EXPLAIN_DEATHMASON_LOCK = "Deathmason Locking Cards";
 export declare const EXPLAIN_DEATHMASON_REDRAW = "Deathmason Redraw";
 export declare const EXPLAIN_GORU = "Goru Basics";
 export declare const EXPLAIN_SOUL_DEBT = "Soul Debt";
-export declare const EXPLAIN_SANDBOX = "Sandbox Mode";
 export declare const autoExplains: string[];
 export declare const autoExplainsDeathmason: string[];
 export declare const autoExplainGoru: string[];
