@@ -39,7 +39,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.SPECIAL],
-        thumbnail: 'spellmasons-mods/Mana Evolution/images/slime.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/slime.png',
         replaces: [clone_id],
         requiresFollowingCard: false,
         description: ['Inflicts the Boss Modifier Slime, Causing the affected unit to clone itself each turn.'],

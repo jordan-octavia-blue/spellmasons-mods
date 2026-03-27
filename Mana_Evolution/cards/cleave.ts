@@ -49,7 +49,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.SPECIAL],
-        thumbnail: 'spellmasons-mods/Mana Evolution/images/cleave.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/cleave.png',
         replaces: [slashCardId],
         requiresFollowingCard: false,
         description: ['Deals 30 damage. Units killed by this spell will be split into 2 corpses.'],

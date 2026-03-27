@@ -50,7 +50,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.COMMON],
-        thumbnail: 'spellmasons-mods/Mana Evolution/images/damocles.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/damocles.png',
         replaces: [rendCardId],
         requiresFollowingCard: false,
         description: ['Summons the Sword of Damocles, which deals damage that scales with stacks in the same pattern as rend. Damage is done next time unit takes damage. Stacks increase every turn.'],

@@ -39,7 +39,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.SPECIAL],
-        thumbnail: 'spellmasons-mods/Mana Evolution/images/growth.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/growth.png',
         replaces: [empowerId],
         requiresFollowingCard: false,
         description: ['Inflicts the Boss Modifier growth, Causing the affected unit to get stronger each turn.'],

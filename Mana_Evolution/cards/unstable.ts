@@ -48,7 +48,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.SPECIAL],
-        thumbnail: 'spellmasons-mods/Mana Evolution/images/unstable.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/unstable.png',
         replaces: [displaceId],
         requiresFollowingCard: false,
         description: ['Inflicts the Boss Modifier Unstable, Causing the affected unit to teleport to a random location each turn.'],

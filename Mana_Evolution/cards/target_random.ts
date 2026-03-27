@@ -39,7 +39,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.SPECIAL],
-        thumbnail: 'spellmasons-mods/Mana Evolution/images/target around.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/target around.png',
         replaces: [targetArrowCardId],
         requiresFollowingCard: true,
         description: ['Targets a random entity.'],

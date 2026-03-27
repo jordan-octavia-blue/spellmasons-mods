@@ -95,7 +95,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.SPECIAL],
-        thumbnail: 'spellmasons-mods/Mana Evolution/images/chaos_summon.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/chaos_summon.png',
         replaces: [id],
         description: 'Summons a random unit to fight for you. The summoned unit may receive random boss modifiers.',
         allowNonUnitTarget: true,

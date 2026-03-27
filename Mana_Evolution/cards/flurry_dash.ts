@@ -39,7 +39,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.SPECIAL],
-        thumbnail: 'spellmasons-mods/Mana Evolution/images/flurry_dash.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/flurry_dash.png',
         replaces: [dash_id],
         requiresFollowingCard: false,
         description: ['Teleport to each target in sequence.'],

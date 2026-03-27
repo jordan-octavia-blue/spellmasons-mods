@@ -72,7 +72,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.RARE],
-        thumbnail: 'spellmasons-mods/Mana Evolution/images/tranquilizer.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/tranquilizer.png',
         // so that you can fire the arrow at targets out of range
         allowNonUnitTarget: true,
         ignoreRange: true,
