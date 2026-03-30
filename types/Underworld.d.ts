@@ -181,7 +181,7 @@ export default class Underworld {
     _getLevelText(levelIndex: number): string;
     getLevelText(): string;
     giveStartOfLevelStatPoints({ levelIndex }: LevelData): void;
-    createLevel(levelData: LevelData, gameMode?: GameMode): Promise<void>;
+    createLevel(levelData: LevelData, gameMode?: GameMode, rules?: IGameRules): Promise<void>;
     generateLevelDataSyncronous(levelIndex: number, gameMode?: GameMode): LevelData;
     generateLevelData(levelIndex: number): Promise<void>;
     checkPickupCollisions(unit: Unit.IUnit, prediction: boolean): void;

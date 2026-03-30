@@ -28,6 +28,7 @@ const spell: Spell = {
     thumbnail: 'spellmasons-mods/Bogiacs_Spells/graphics/icons/Siphon.png',
     animationPath: 'potionPickup',
     description: `Drain 10 health and 10 mana from targets.`,
+    omitForWizardType: ['Warden'],
     effect: async (state, card, quantity, underworld, prediction) => {
       const targets = state.targetedUnits.filter(u => u.alive);
       let promises = [];
