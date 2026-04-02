@@ -358,6 +358,14 @@ const vampirismEvent: Events = {
 
         return amount;
     },
+    onSpawn: (unit: IUnit, underworld: Underworld, prediction: boolean) => {
+        if (unit.modifiers[vampirismId] && !unit.modifiers['Blood Curse']) {
+            getOrInitModifier(unit, 'Blood Curse', { isCurse: true, quantity: unit.modifiers[vampirismId].quantity, keepOnDeath: true }, () => {
+                Unit.addModifier(unit, 'Blood Curse', underworld, prediction, 1);
+                Unit.addEvent(unit, 'Blood Curse');
+            });
+        }
+    },
     onTurnStart: async (unit: IUnit, underworld: Underworld, prediction: boolean) => {
         if (unit.modifiers[vampirismId] && !unit.modifiers['Blood Curse']) {
             getOrInitModifier(unit, 'Blood Curse', { isCurse: true, quantity: unit.modifiers[vampirismId].quantity, keepOnDeath: true }, () => {
