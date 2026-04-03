@@ -70,11 +70,12 @@ export interface IPickupSource {
 }
 export declare function copyForPredictionPickup(p: IPickup): IPickup;
 export declare const TIME_CIRCLE_JID = "timeCircle";
-export declare function create({ pos, pickupSource, idOverride, logSource }: {
+export declare function create({ pos, pickupSource, idOverride, logSource, skipCollisionCheck }: {
     pos: Vec2;
     pickupSource: IPickupSource;
     idOverride?: number;
     logSource?: string;
+    skipCollisionCheck?: boolean;
 }, underworld: Underworld, prediction: boolean): IPickup;
 export declare function sync(pickup: IPickup): void;
 export declare function setPosition(pickup: IPickup, x: number, y: number): void;

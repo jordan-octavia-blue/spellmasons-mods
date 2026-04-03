@@ -9,6 +9,7 @@ import Doom_Scroll from './The_Doom_Scroll/Doom_Scroll';
 import Runic_Alphabet from './RunicAlphabet/RunicAlphabet';
 import DoriososMinions from './Doriosos_minions/doriosos_minions';
 import WeedysWorlds from './WeedysWorlds/WeedysWorlds';
+import WeedysOtherWorlds from './WeedysOtherWorlds/WeedysOtherWorlds';
 import ManaEvolution from './Mana_Evolution/Mana_Evolution'
 import DeathmasonSell from './SellforDeathmason/SellforDeathmason';
 
@@ -22,6 +23,7 @@ const mods: commonTypes.Mod[] = [
     Runic_Alphabet,
     DoriososMinions,
     WeedysWorlds,
+    WeedysOtherWorlds,
     // Forcefield,
     ManaEvolution,
     DeathmasonSell,
