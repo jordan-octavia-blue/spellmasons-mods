@@ -42,7 +42,7 @@ const spell: Spell = {
         healthCost: 0,
         expenseScaling: 1,
         probability: probabilityMap[CardRarity.COMMON],
-        thumbnail: 'spellmasons-mods/Mana_Evolution/images/target around.png',
+        thumbnail: 'spellmasons-mods/Mana_Evolution/images/target_around.png',
         replaces: [circleId],
         requiresFollowingCard: true,
         description: ['Targets entities within a radius around each target, then untargets the initial targets.'],
