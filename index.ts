@@ -12,6 +12,7 @@ import WeedysWorlds from './WeedysWorlds/WeedysWorlds';
 import WeedysOtherWorlds from './WeedysOtherWorlds/WeedysOtherWorlds';
 import ManaEvolution from './Mana_Evolution/Mana_Evolution'
 import DeathmasonSell from './SellforDeathmason/SellforDeathmason';
+import Investment from './investment/index';
 
 const mods: commonTypes.Mod[] = [
     UndeadBlade,
@@ -27,6 +28,7 @@ const mods: commonTypes.Mod[] = [
     // Forcefield,
     ManaEvolution,
     DeathmasonSell,
+    Investment,
 ];
 globalThis.mods = globalThis.mods !== undefined ? [...globalThis.mods, ...mods] : mods;
 console.log('Mods: Add mods', globalThis.mods);
